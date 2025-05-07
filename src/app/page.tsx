@@ -1,126 +1,105 @@
 'use client';
 
-import Link from 'next/link';
 import PageTransition from './components/PageTransition';
 import { motion } from 'framer-motion';
-import { SiNextdotjs } from 'react-icons/si';
-import { FiHome, FiCode, FiBookOpen, FiMail, FiArrowRight } from 'react-icons/fi';
-
-// Animation variants
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  show: { 
-    y: 0, 
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 260,
-      damping: 20
-    }
-  }
-};
-
-// Navigation items
-const navItems = [
-  { 
-    href: "/main", 
-    title: "Main Page", 
-    description: "포트폴리오와 프로젝트 소개",
-    icon: <FiHome className="text-blue-500" />
-  },
-  { 
-    href: "/skills", 
-    title: "Skills", 
-    description: "기술 스택과 역량 소개",
-    icon: <FiCode className="text-indigo-500" />
-  },
-  { 
-    href: "/blog", 
-    title: "Blog", 
-    description: "기술 관련 포스트와 인사이트",
-    icon: <FiBookOpen className="text-purple-500" />
-  },
-  { 
-    href: "/contact", 
-    title: "Contact", 
-    description: "연락처 및 SNS 정보",
-    icon: <FiMail className="text-pink-500" />
-  }
-];
+import { SiNextdotjs, SiReact, SiJavascript, SiTypescript } from 'react-icons/si';
+import { TypeAnimation } from 'react-type-animation';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    // Toggle cursor visibility every 500ms for code block
+    const interval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <PageTransition animationType="slide-up">
       <div className="container mx-auto py-16 px-4">
-        <header className="mb-16 text-center max-w-3xl mx-auto">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center transform rotate-12 shadow-lg">
-                <SiNextdotjs className="text-4xl text-white" />
+        <div className="max-w-3xl mx-auto">
+          <header className="mb-16 text-center">
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center transform rotate-12 shadow-lg">
+                  <SiReact className="text-5xl text-white animate-spin-slow" />
+                </div>
+                <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-yellow-400 rounded-lg -rotate-12 opacity-90 flex items-center justify-center">
+                  <SiJavascript className="text-2xl text-gray-800" />
+                </div>
+                <div className="absolute -top-2 -left-2 w-10 h-10 bg-blue-400 rounded-lg rotate-12 opacity-90 flex items-center justify-center">
+                  <SiTypescript className="text-xl text-white" />
+                </div>
               </div>
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-yellow-400 rounded-lg -rotate-12 opacity-90"></div>
             </div>
-          </div>
-          
-          <h1 className="text-5xl font-bold mb-4 text-gray-800">Portfolio <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Dashboard</span></h1>
-          
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            프론트엔드 개발자 포트폴리오에 오신 것을 환영합니다. <br className="hidden md:block" />
-            아래 메뉴에서 원하는 섹션을 선택해 주세요.
-          </p>
-          
-          <div className="inline-block font-mono text-sm bg-gray-800 text-gray-200 p-4 rounded-lg shadow-md mb-8">
-            <code>{`const welcome = (visitor) => { 
-  console.log("Hello, ${"{"}visitor{"}"}! Thanks for visiting.");
-}`}</code>
-          </div>
-        </header>
+            
+            <h1 className="text-5xl font-bold mb-6 text-gray-800">
+              <TypeAnimation
+                sequence={[
+                  '프론트엔드 개발자',
+                  1000,
+                  '프론트엔드 개발자 김병년',
+                  500
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={1}
+                className="text-5xl font-bold"
+                cursor={false}
+              />
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              사용자 경험을 중요시하는 웹 개발자입니다. <br className="hidden md:block" />
+              모던 기술로 아름답고 효율적인 웹 서비스를 구현합니다.
+            </p>
+          </header>
 
-        <motion.nav 
-          className="max-w-4xl mx-auto"
-          variants={container}
-          initial="hidden"
-          animate="show"
-        >
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {navItems.map((navItem, index) => (
-              <motion.li key={index} variants={item}>
-                <Link 
-                  href={navItem.href}
-                  className="group block p-8 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-b from-gray-100 to-transparent rounded-bl-full -mt-8 -mr-8 opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
-                      {navItem.icon}
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
-                      {navItem.title}
-                    </h2>
-                  </div>
-                  
-                  <p className="text-gray-600 mb-4 pl-16">{navItem.description}</p>
-                  
-                  <div className="pl-16 flex items-center text-blue-600 font-medium">
-                    <span>방문하기</span>
-                    <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.nav>
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-2xl font-mono text-sm bg-gray-800 text-gray-200 p-6 rounded-xl shadow-md mb-12 relative overflow-hidden">
+              <div className="flex items-center mb-2 text-xs">
+                <div className="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                <span className="ml-2 text-gray-400">script.js</span>
+              </div>
+              <TypeAnimation
+                sequence={[
+                  'const welcome = () => {\n  console.log("Hello, visitor!");\n}',
+                  1000,
+                  'const welcome = (visitor) => {\n  console.log("Hello, " + visitor + "!");\n}',
+                  1000, 
+                  'const welcome = (visitor) => {\n  console.log(`Hello, ${visitor}! Thanks for visiting.`);\n}',
+                  3000
+                ]}
+                wrapper="span"
+                speed={50}
+                className="block whitespace-pre"
+                repeat={1}
+                cursor={showCursor}
+              />
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="flex gap-4 mb-12"
+            >
+              <a href="#" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                포트폴리오 보기
+              </a>
+              <a href="#" className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors">
+                연락하기
+              </a>
+            </motion.div>
+
+          </div>
+        </div>
       </div>
     </PageTransition>
   );

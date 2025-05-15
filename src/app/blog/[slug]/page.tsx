@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPostContent } from "@/lib/notion";
 import { getPostBySlug, getAdjacentPosts } from "../../../lib/blog";
-import PageTransition from "@/app/components/PageTransition";
-import ScrollReveal from "@/app/components/common/ScrollReveal";
 import BlogPostHeader from "./components/BlogPostHeader";
 import BlogPostContent from "./components/BlogPostContent";
 import BlogPostTags from "./components/BlogPostTags";
@@ -12,7 +10,6 @@ import { getAllPosts } from "@/lib/notion";
 // 정적 페이지 생성을 위한 경로 생성
 export async function generateStaticParams() {
   const posts = await getAllPosts();
-
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -21,13 +18,7 @@ export async function generateStaticParams() {
 // 1시간마다 재검증
 export const revalidate = 3600;
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
-
-export default async function BlogPost({ params }: Props) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {

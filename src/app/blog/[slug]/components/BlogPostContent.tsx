@@ -8,7 +8,7 @@ interface BlogPostContentProps {
 }
 
 export default function BlogPostContent({ content }: BlogPostContentProps) {
-  console.log("BlogPostContent 렌더링!");
+  // console.log("BlogPostContent 렌더링!");
 
   return (
     <div className="bg-white p-6 sm:p-10 rounded-xl shadow-md prose prose-blue max-w-none">

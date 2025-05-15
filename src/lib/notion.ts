@@ -35,7 +35,7 @@ const databaseId = process.env.NOTION_DATABASE_ID || "";
 // 데이터베이스에서 모든 포스트 가져오기
 export async function getAllPosts(): Promise<NotionPost[]> {
   try {
-    console.log("노션 API 요청 시작 - 데이터베이스 ID:", databaseId.substring(0, 5) + "...");
+    // console.log("노션 API 요청 시작 - 데이터베이스 ID:", databaseId.substring(0, 5) + "...");
 
     const response = await notion.databases.query({
       database_id: databaseId,
@@ -73,54 +73,72 @@ export async function getAllPosts(): Promise<NotionPost[]> {
 // 특정 포스트의 내용 가져오기
 export async function getPostContent(pageId: string): Promise<string> {
   try {
-    let content = "";
-    let hasMore = true;
-    let startCursor: string | null = null;
+    // NotionToMarkdown 사용 시도
+    try {
+      const mdblocks = await n2m.pageToMarkdown(pageId);
+      const mdString = n2m.toMarkdownString(mdblocks);
+      console.log("NotionToMarkdown으로 변환 성공");
+      return mdString.parent;
+    } catch (mdError) {
+      console.warn("NotionToMarkdown 변환 실패, 대체 방법으로 시도:", mdError);
 
-    while (hasMore) {
-      const response = await notion.blocks.children.list({
-        block_id: pageId,
-        start_cursor: startCursor || undefined,
-        page_size: 100,
-      });
+      // 대체 방법으로 계속 진행
+      let content = "";
+      let hasMore = true;
+      let startCursor: string | null = null;
 
-      const blocks = response.results;
+      while (hasMore) {
+        const response = await notion.blocks.children.list({
+          block_id: pageId,
+          start_cursor: startCursor || undefined,
+          page_size: 100,
+        });
 
-      for (const block of blocks) {
-        if ("type" in block) {
-          switch (block.type) {
-            case "paragraph":
-              content += block.paragraph.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
-              break;
-            case "heading_1":
-              content += "# " + block.heading_1.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
-              break;
-            case "heading_2":
-              content += "## " + block.heading_2.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
-              break;
-            case "heading_3":
-              content += "### " + block.heading_3.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
-              break;
-            case "bulleted_list_item":
-              content += "- " + block.bulleted_list_item.rich_text.map((text: any) => text.plain_text).join("") + "\n";
-              break;
-            case "numbered_list_item":
-              content += "1. " + block.numbered_list_item.rich_text.map((text: any) => text.plain_text).join("") + "\n";
-              break;
-            case "code":
-              content += "```" + (block.code.language || "") + "\n";
-              content += block.code.rich_text.map((text: any) => text.plain_text).join("") + "\n";
-              content += "```\n\n";
-              break;
+        const blocks = response.results;
+
+        for (const block of blocks) {
+          if ("type" in block) {
+            switch (block.type) {
+              case "paragraph":
+                content += block.paragraph.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
+                break;
+              case "heading_1":
+                content += "# " + block.heading_1.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
+                break;
+              case "heading_2":
+                content += "## " + block.heading_2.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
+                break;
+              case "heading_3":
+                content += "### " + block.heading_3.rich_text.map((text: any) => text.plain_text).join("") + "\n\n";
+                break;
+              case "bulleted_list_item":
+                content += "- " + block.bulleted_list_item.rich_text.map((text: any) => text.plain_text).join("") + "\n";
+                break;
+              case "numbered_list_item":
+                content += "1. " + block.numbered_list_item.rich_text.map((text: any) => text.plain_text).join("") + "\n";
+                break;
+              case "image":
+                if ("file" in block.image) {
+                  content += `![이미지](${block.image.file.url})\n\n`;
+                } else if ("external" in block.image) {
+                  content += `![이미지](${block.image.external.url})\n\n`;
+                }
+                break;
+              case "code":
+                content += "```" + (block.code.language || "") + "\n";
+                content += block.code.rich_text.map((text: any) => text.plain_text).join("") + "\n";
+                content += "```\n\n";
+                break;
+            }
           }
         }
-      }
 
-      hasMore = response.has_more;
-      startCursor = response.next_cursor;
+        hasMore = response.has_more;
+        startCursor = response.next_cursor;
+      }
+      console.log("대체 방법으로 포스트 내용 가져오기 성공");
+      return content;
     }
-    console.log("getPostContent content:", content);
-    return content;
   } catch (error) {
     console.error("포스트 내용을 가져오는 중 오류가 발생했습니다:", error);
     return "";

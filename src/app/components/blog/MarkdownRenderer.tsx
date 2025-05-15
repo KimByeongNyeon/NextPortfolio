@@ -15,7 +15,8 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   return (
     <motion.div className="prose prose-lg max-w-none prose-blue prose-headings:scroll-mt-20" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <ReactMarkdown
-        rehypePlugins={[rehypeRaw, rehypeHighlight, remarkGfm]}
+        rehypePlugins={[rehypeRaw, [rehypeHighlight, { ignoreMissing: true }]]}
+        remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
             <motion.h1 className="text-3xl font-bold mb-5 mt-8 pb-2 border-b border-gray-200" initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
@@ -56,16 +57,28 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               {children}
             </a>
           ),
-          img: ({ src, alt }) => (
-            <div className="my-6 rounded-lg overflow-hidden shadow-md">
-              {src && (
-                <div className="relative rounded-lg overflow-hidden">
-                  <img src={src} alt={alt || ""} className="w-full rounded-lg transition-transform duration-500 hover:scale-105" />
+          img: ({ src, alt }) => {
+            if (!src) return null;
+
+            const imgSrc = String(src);
+            const isNotionUrl = imgSrc.includes("notion.so");
+
+            return (
+              <div className="my-6 rounded-lg overflow-hidden shadow-md">
+                <div className="relative w-full aspect-video max-h-[300px] rounded-lg overflow-hidden">
+                  <Image
+                    src={imgSrc}
+                    alt={alt || "이미지"}
+                    fill
+                    className="object-contain transition-transform duration-500 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized={isNotionUrl}
+                  />
                 </div>
-              )}
-              {alt && <p className="text-center text-sm text-gray-500 mt-2 italic">{alt}</p>}
-            </div>
-          ),
+                {alt && <p className="text-center text-sm text-gray-500 mt-2 italic">{alt}</p>}
+              </div>
+            );
+          },
           table: ({ children }) => (
             <div className="overflow-x-auto my-6 rounded-lg shadow-sm border border-gray-200">
               <table className="min-w-full divide-y divide-gray-200">{children}</table>

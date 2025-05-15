@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import PageTransition from './components/PageTransition';
-import { motion } from 'framer-motion';
-import { SiNextdotjs, SiReact, SiJavascript, SiTypescript } from 'react-icons/si';
-import { TypeAnimation } from 'react-type-animation';
-import { useState, useEffect } from 'react';
+import PageTransition from "./components/PageTransition";
+import { motion } from "framer-motion";
+import { SiNextdotjs, SiReact, SiJavascript, SiTypescript } from "react-icons/si";
+import { TypeAnimation } from "react-type-animation";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [showCursor, setShowCursor] = useState(true);
@@ -12,9 +12,9 @@ export default function Home() {
   useEffect(() => {
     // Toggle cursor visibility every 500ms for code block
     const interval = setInterval(() => {
-      setShowCursor(prev => !prev);
+      setShowCursor((prev) => !prev);
     }, 500);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -36,23 +36,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             <h1 className="text-5xl font-bold mb-6 text-gray-800">
-              <TypeAnimation
-                sequence={[
-                  '프론트엔드 개발자',
-                  1000,
-                  '프론트엔드 개발자 김병년',
-                  500
-                ]}
-                wrapper="span"
-                speed={50}
-                repeat={1}
-                className="text-5xl font-bold"
-                cursor={false}
-              />
+              <TypeAnimation sequence={["프론트엔드 개발자", 1000, "프론트엔드 개발자 김병년", 500]} wrapper="span" speed={50} repeat={1} className="text-5xl font-bold" cursor={false} />
             </h1>
-            
+
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
               사용자 경험을 중요시하는 웹 개발자입니다. <br className="hidden md:block" />
               모던 기술로 아름답고 효율적인 웹 서비스를 구현합니다.
@@ -72,9 +60,9 @@ export default function Home() {
                   'const welcome = () => {\n  console.log("Hello, visitor!");\n}',
                   1000,
                   'const welcome = (visitor) => {\n  console.log("Hello, " + visitor + "!");\n}',
-                  1000, 
-                  'const welcome = (visitor) => {\n  console.log(`Hello, ${visitor}! Thanks for visiting.`);\n}',
-                  3000
+                  1000,
+                  "const welcome = (visitor) => {\n  console.log(`Hello, ${visitor}! Thanks for visiting.`);\n}",
+                  3000,
                 ]}
                 wrapper="span"
                 speed={50}
@@ -83,21 +71,6 @@ export default function Home() {
                 cursor={showCursor}
               />
             </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="flex gap-4 mb-12"
-            >
-              <a href="#" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
-                포트폴리오 보기
-              </a>
-              <a href="#" className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors">
-                연락하기
-              </a>
-            </motion.div>
-
           </div>
         </div>
       </div>

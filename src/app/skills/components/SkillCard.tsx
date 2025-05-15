@@ -1,20 +1,27 @@
+import { ReactNode } from "react";
+
 interface SkillCardProps {
   title: string;
   skills: string[];
+  icon: ReactNode;
+  description: string;
 }
 
-export default function SkillCard({ title, skills }: SkillCardProps) {
+export default function SkillCard({ title, skills, icon, description }: SkillCardProps) {
   return (
-    <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-      <h2 className="text-xl font-semibold mb-4">{title}</h2>
-      <ul className="space-y-2">
+    <div className="p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-white">
+      <div className="flex items-center mb-4">
+        <div className="p-3 rounded-lg bg-gray-50 mr-3">{icon}</div>
+        <h2 className="text-xl font-bold">{title}</h2>
+      </div>
+      <p className="text-gray-600 mb-4 text-sm">{description}</p>
+      <div className="flex flex-wrap gap-2">
         {skills.map((skill) => (
-          <li key={skill} className="flex items-center">
-            <span className="mr-2 text-blue-500">•</span>
+          <span key={skill} className="px-3 py-1 bg-gray-50 rounded-md text-sm font-medium text-gray-700 border border-gray-100">
             {skill}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

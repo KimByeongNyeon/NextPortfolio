@@ -5,11 +5,13 @@ import BlogSection from "./components/BlogSection";
 
 export default function MainPage() {
   return (
-    <PageTransition animationType="slide-right">
-      <div className="container mx-auto py-12 px-4">
-        <HeroSection />
-        <ProjectsSection />
-        <BlogSection />
+    <PageTransition animationType="fade">
+      <div className="w-full min-h-screen overflow-visible relative">
+        <div className="max-w-6xl mx-auto px-6 pt-24 pb-16">
+          <HeroSection />
+          <ProjectsSection />
+          <BlogSection />
+        </div>
       </div>
     </PageTransition>
   );

@@ -1,45 +1,40 @@
-
-import { Suspense } from 'react';
-import PageTransition from '../components/PageTransition';
-import ScrollReveal from '../components/common/ScrollReveal';
-import BlogContent from './BlogContent';
-import { getAllPosts } from '@/lib/notion';
-import { NotionPost } from '@/types/notion';
-import { mockPosts } from '@/lib/mockData';
+import { Suspense } from "react";
+import PageTransition from "../components/PageTransition";
+import ScrollReveal from "../components/common/ScrollReveal";
+import BlogContent from "./BlogContent";
+import { getAllPosts } from "@/lib/notion";
+import { NotionPost } from "@/types/notion";
+import { mockPosts } from "@/lib/mockData";
 
 // 정적 생성을 위한 revalidate 설정
 export const revalidate = 3600; // 1시간마다 재생성
 
 export default async function BlogPage() {
   let posts: NotionPost[] = [];
-  
+
   try {
     // 노션에서 포스트 가져오기 시도
     posts = await getAllPosts();
-    console.log('노션에서 가져온 포스트 수:', posts.length);
-    
+    console.log("노션에서 가져온 포스트 수:", posts.length);
+
     // 노션에서 포스트를 가져오지 못했다면 모의 데이터 사용
     if (posts.length === 0) {
-      console.log('노션 API 연결에 실패했거나 포스트가 없습니다. 모의 데이터를 사용합니다.');
+      console.log("노션 API 연결에 실패했거나 포스트가 없습니다. 모의 데이터를 사용합니다.");
       posts = mockPosts;
     }
   } catch (error) {
-    console.error('노션 API 오류:', error);
+    console.error("노션 API 오류:", error);
     // 오류 발생 시 모의 데이터 사용
     posts = mockPosts;
   }
-  
+
   return (
     <PageTransition animationType="slide-left">
       <div className="container mx-auto py-10 px-4">
         <ScrollReveal>
           <h1 className="text-3xl font-bold mb-6">블로그</h1>
-          <p className="text-gray-600 mb-8 max-w-2xl">
-            웹 개발, 디자인, 그리고 기술 트렌드에 관한 글을 공유합니다. 
-            제 경험과 인사이트가 여러분의 프로젝트에 도움이 되길 바랍니다.
-          </p>
         </ScrollReveal>
-        
+
         <Suspense fallback={<div className="py-10 text-center">블로그 글을 불러오는 중...</div>}>
           <BlogContent initialPosts={posts} />
         </Suspense>

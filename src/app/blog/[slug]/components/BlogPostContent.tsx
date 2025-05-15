@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import MarkdownRenderer from "@/app/components/blog/MarkdownRenderer";
+import MarkdownRenderer from "@/app/blog/components/MarkdownRenderer";
 
 interface BlogPostContentProps {
   content: string;

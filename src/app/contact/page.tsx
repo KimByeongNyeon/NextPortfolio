@@ -3,7 +3,7 @@
 import { useState } from "react";
 import PageTransition from "../components/PageTransition";
 import ScrollReveal from "../components/common/ScrollReveal";
-import ContactInfo from "../components/contact/ContactInfo";
+import ContactInfo from "./components/ContactInfo";
 import ContactForm from "./components/ContactForm";
 import WorkingHours from "./components/WorkingHours";
 
@@ -47,10 +47,6 @@ export default function ContactPage() {
             </div>
           </ScrollReveal>
         </div>
-
-        <ScrollReveal delay={0.5}>
-          <WorkingHours />
-        </ScrollReveal>
       </div>
     </PageTransition>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import ScrollReveal from "../../components/common/ScrollReveal";
-import ProjectsShowcase from "../../components/main/ProjectSlider";
+import ProjectsShowcase from "./ProjectSlider";
 
 export default function ProjectsSection() {
   return (

@@ -6,8 +6,8 @@ import Background from "./components/Background";
 
 export const metadata: Metadata = {
   title: {
-    default: "김병년 | 프론트엔드 개발자 포트폴리오",
-    template: "%s | 김병년"
+    default: "김병년's 포트폴리오",
+    template: "%s | 김병년's 포트폴리오"
   },
   icons: {
     icon: '/assets/profile.png',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "김병년 | 프론트엔드 개발자 포트폴리오",
+    title: "김병년's 포트폴리오",
     description: "프론트엔드 개발자 김병년의 포트폴리오입니다. React, Next.js, TypeScript를 활용한 다양한 프로젝트와 개발 경험을 소개합니다.",
     url: 'https://next-portfolio-bbwx.vercel.app/', // 실제 도메인으로 변경 필요
     siteName: "김병년's 포트폴리오",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "김병년 | 프론트엔드 개발자 포트폴리오",
+    title: "김병년's 포트폴리오",
     description: "프론트엔드 개발자 김병년의 포트폴리오입니다. React, Next.js, TypeScript를 활용한 다양한 프로젝트와 개발 경험을 소개합니다.",
     images: ['/assets/profile.png'], // 실제 OG 이미지 경로로 변경 필요
   },

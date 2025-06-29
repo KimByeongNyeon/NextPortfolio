@@ -16,6 +16,7 @@ type BlogPost = {
   category: string;
   date: string;
   readTime: string;
+  coverImage?: string;
 };
 
 interface BlogContentProps {
@@ -23,15 +24,18 @@ interface BlogContentProps {
 }
 
 export default function BlogContent({ initialPosts }: BlogContentProps) {
-  // 노션 포스트를 BlogFilter에서 사용할 수 있는 형식으로 변환
-  const convertedPosts = initialPosts.map((post) => ({
-    id: post.id,
-    title: post.title,
-    excerpt: post.excerpt,
-    category: post.category,
-    date: post.date,
-    readTime: post.readTime,
-  }));
+  // 노션 포스트를 BlogFilter에서 사용할 수 있는 형식으로 변환 및 최신 날짜 순 정렬
+  const convertedPosts = initialPosts
+    .map((post) => ({
+      id: post.id,
+      title: post.title,
+      excerpt: post.excerpt,
+      category: post.category,
+      date: post.date,
+      readTime: post.readTime,
+      coverImage: post.coverImage,
+    }))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(convertedPosts);
 
@@ -91,6 +95,9 @@ interface BlogPostCardProps {
 }
 
 function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
+  const [imageError, setImageError] = useState(false);
+  const [useRegularImg, setUseRegularImg] = useState(false);
+
   return (
     <motion.div
       className="group overflow-hidden h-full flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
@@ -102,14 +109,31 @@ function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
       <Link href={`/blog/${slug}`} className="block overflow-hidden">
         <div className="relative w-full aspect-[16/9] overflow-hidden">
           {coverImage ? (
-            <Image
-              src={coverImage}
-              alt={post.title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              unoptimized={coverImage.includes("notion.so")}
-            />
+            <>
+              {/* base64 이미지나 data URL은 항상 일반 img 태그 사용 */}
+              {coverImage.startsWith('data:') || imageError || useRegularImg ? (
+                <img
+                  src={coverImage}
+                  alt={post.title}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                /* HTTP/HTTPS URL만 Next.js Image 컴포넌트 사용 */
+                <Image
+                  src={coverImage}
+                  alt={post.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  unoptimized={true}
+                  onError={() => {
+                    setImageError(true);
+                    setUseRegularImg(true);
+                  }}
+                />
+              )}
+            </>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">

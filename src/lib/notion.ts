@@ -50,6 +50,29 @@ export async function getAllPosts(): Promise<NotionPost[]> {
     const posts = response.results.map((page: any) => {
       const properties = page.properties;
 
+      // 커버 이미지 URL 추출 (여러 형태 지원)
+      let coverImageUrl = "";
+      if (properties.CoverImage) {
+        // Files & media 타입의 경우
+        if (properties.CoverImage.files && properties.CoverImage.files.length > 0) {
+          const file = properties.CoverImage.files[0];
+          coverImageUrl = file.file?.url || file.external?.url || "";
+        }
+        // URL 타입의 경우  
+        else if (properties.CoverImage.url) {
+          coverImageUrl = properties.CoverImage.url;
+        }
+        // Rich text 타입의 경우
+        else if (properties.CoverImage.rich_text && properties.CoverImage.rich_text.length > 0) {
+          coverImageUrl = properties.CoverImage.rich_text[0].plain_text || "";
+        }
+      }
+
+      console.log(`🖼️ Post "${properties.Title?.title[0]?.plain_text}":`, {
+        coverImageProperty: properties.CoverImage,
+        extractedUrl: coverImageUrl
+      });
+
       return {
         id: page.id,
         title: properties.Title?.title[0]?.plain_text || "",
@@ -59,7 +82,7 @@ export async function getAllPosts(): Promise<NotionPost[]> {
         tags: properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
         category: properties.Category?.select?.name || "",
         readTime: properties.ReadTime?.rich_text[0]?.plain_text || "",
-        coverImage: page.cover?.external?.url || page.cover?.file?.url || "",
+        coverImage: coverImageUrl,
       };
     });
 
@@ -149,16 +172,37 @@ export async function getPostContent(pageId: string): Promise<string> {
 export async function getPost(pageId: string) {
   try {
     const page = await notion.pages.retrieve({ page_id: pageId });
+    const properties = (page as any).properties;
+
+    // 커버 이미지 URL 추출
+    let coverImageUrl = "";
+    if (properties.CoverImage) {
+      if (properties.CoverImage.files && properties.CoverImage.files.length > 0) {
+        const file = properties.CoverImage.files[0];
+        coverImageUrl = file.file?.url || file.external?.url || "";
+      }
+      else if (properties.CoverImage.url) {
+        coverImageUrl = properties.CoverImage.url;
+      }
+      else if (properties.CoverImage.rich_text && properties.CoverImage.rich_text.length > 0) {
+        coverImageUrl = properties.CoverImage.rich_text[0].plain_text || "";
+      }
+    }
+
+    console.log(`🔍 getPost - "${properties.Title?.title[0]?.plain_text}":`, {
+      coverImageProperty: properties.CoverImage,
+      extractedUrl: coverImageUrl
+    });
 
     return {
       id: page.id,
-      title: (page as any).properties.Title?.title[0]?.plain_text || "제목 없음",
-      date: (page as any).properties.Date?.date?.start || "",
-      tags: (page as any).properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
-      excerpt: (page as any).properties.Excerpt?.rich_text[0]?.plain_text || "",
-      category: (page as any).properties.Category?.select?.name || "미분류",
-      readTime: (page as any).properties.ReadTime?.rich_text[0]?.plain_text || "3분 소요",
-      coverImage: (page as any).properties.CoverImage?.url || (page as any).cover?.external?.url || "",
+      title: properties.Title?.title[0]?.plain_text || "제목 없음",
+      date: properties.Date?.date?.start || "",
+      tags: properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
+      excerpt: properties.Excerpt?.rich_text[0]?.plain_text || "",
+      category: properties.Category?.select?.name || "미분류",
+      readTime: properties.ReadTime?.rich_text[0]?.plain_text || "3분 소요",
+      coverImage: coverImageUrl,
     };
   } catch (error) {
     console.error("노션 페이지 메타데이터를 가져오는 중 오류가 발생했습니다:", error);
@@ -201,16 +245,33 @@ export async function getPostsByCategory(category: string) {
     }
 
     return response.results.map((page: any) => {
+      const properties = page.properties;
+
+      // 커버 이미지 URL 추출
+      let coverImageUrl = "";
+      if (properties.CoverImage) {
+        if (properties.CoverImage.files && properties.CoverImage.files.length > 0) {
+          const file = properties.CoverImage.files[0];
+          coverImageUrl = file.file?.url || file.external?.url || "";
+        }
+        else if (properties.CoverImage.url) {
+          coverImageUrl = properties.CoverImage.url;
+        }
+        else if (properties.CoverImage.rich_text && properties.CoverImage.rich_text.length > 0) {
+          coverImageUrl = properties.CoverImage.rich_text[0].plain_text || "";
+        }
+      }
+
       return {
         id: page.id,
-        title: page.properties.Title?.title[0]?.plain_text || "제목 없음",
-        slug: page.properties.Slug?.rich_text[0]?.plain_text || page.id,
-        date: page.properties.Date?.date?.start || "",
-        tags: page.properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
-        excerpt: page.properties.Excerpt?.rich_text[0]?.plain_text || "",
-        category: page.properties.Category?.select?.name || "미분류",
-        readTime: page.properties.ReadTime?.rich_text[0]?.plain_text || "3분 소요",
-        coverImage: page.properties.CoverImage?.url || page.cover?.external?.url || "",
+        title: properties.Title?.title[0]?.plain_text || "제목 없음",
+        slug: properties.Slug?.rich_text[0]?.plain_text || page.id,
+        date: properties.Date?.date?.start || "",
+        tags: properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
+        excerpt: properties.Excerpt?.rich_text[0]?.plain_text || "",
+        category: properties.Category?.select?.name || "미분류",
+        readTime: properties.ReadTime?.rich_text[0]?.plain_text || "3분 소요",
+        coverImage: coverImageUrl,
       };
     });
   } catch (error) {

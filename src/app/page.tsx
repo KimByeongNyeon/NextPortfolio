@@ -2,6 +2,7 @@
 
 import PageTransition from "./components/PageTransition";
 import HeroSection from "./components/main/HeroSection";
+import IntroduceSection from "./components/main/IntroduceSeciton";
 import ProjectsSection from "./components/main/ProjectsSection";
 import ThankYouSection from "./components/main/ThankYouSection";
 import SkillsContent from "./components/skills/SkillsContent";
@@ -35,9 +36,9 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0.2, 0.6], [50, 0]);
   const heroScale = useTransform(scrollYProgress, [0.2, 1.0], [1.1, 1]);
 
-  // Skills Section 슬라이드 애니메이션 - 오른쪽에서 슬라이드
-  const skillsX = useTransform(skillsScrollProgress, [0, 0.8], [1000, 0]);
+  // Skills Section 페이드 인 애니메이션
   const skillsOpacity = useTransform(skillsScrollProgress, [0, 0.6], [0, 1]);
+  const skillsY = useTransform(skillsScrollProgress, [0, 0.6], [50, 0]);
 
   useEffect(() => {
     // Toggle cursor visibility every 500ms for code block
@@ -132,13 +133,18 @@ export default function Home() {
         <div className="h-[200vh]"></div>
       </div>
 
+      {/* Introduce/About Section */}
+      <div id="about" className="w-full min-h-screen overflow-visible relative bg-white">
+        <IntroduceSection />
+      </div>
+
       {/* Skills Section */}
       <motion.div 
         id="skills" 
         className="w-full bg-gray-50"
         ref={skillsRef}
         style={{
-          x: skillsX,
+          y: skillsY,
           opacity: skillsOpacity
         }}
       >

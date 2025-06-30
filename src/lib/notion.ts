@@ -22,7 +22,7 @@ try {
   // 노션 페이지를 마크다운으로 변환하기 위한 인스턴스
   n2m = new NotionToMarkdown({ notionClient: notion });
 
-  console.log("Notion 클라이언트가 성공적으로 초기화되었습니다.");
+  // console.log("Notion 클라이언트가 성공적으로 초기화되었습니다.");
 } catch (error) {
   console.error("Notion 클라이언트 초기화 실패:", error);
   // 클라이언트 초기화 실패 시 빈 객체 생성 (실제로는 사용되지 않음)
@@ -68,11 +68,6 @@ export async function getAllPosts(): Promise<NotionPost[]> {
         }
       }
 
-      console.log(`🖼️ Post "${properties.Title?.title[0]?.plain_text}":`, {
-        coverImageProperty: properties.CoverImage,
-        extractedUrl: coverImageUrl
-      });
-
       return {
         id: page.id,
         title: properties.Title?.title[0]?.plain_text || "",
@@ -100,7 +95,7 @@ export async function getPostContent(pageId: string): Promise<string> {
     try {
       const mdblocks = await n2m.pageToMarkdown(pageId);
       const mdString = n2m.toMarkdownString(mdblocks);
-      console.log("NotionToMarkdown으로 변환 성공");
+      // console.log("NotionToMarkdown으로 변환 성공");
       return mdString.parent;
     } catch (mdError) {
       console.warn("NotionToMarkdown 변환 실패, 대체 방법으로 시도:", mdError);
@@ -159,7 +154,7 @@ export async function getPostContent(pageId: string): Promise<string> {
         hasMore = response.has_more;
         startCursor = response.next_cursor;
       }
-      console.log("대체 방법으로 포스트 내용 가져오기 성공");
+      // console.log("대체 방법으로 포스트 내용 가져오기 성공");
       return content;
     }
   } catch (error) {
@@ -188,11 +183,6 @@ export async function getPost(pageId: string) {
         coverImageUrl = properties.CoverImage.rich_text[0].plain_text || "";
       }
     }
-
-    console.log(`🔍 getPost - "${properties.Title?.title[0]?.plain_text}":`, {
-      coverImageProperty: properties.CoverImage,
-      extractedUrl: coverImageUrl
-    });
 
     return {
       id: page.id,

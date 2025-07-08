@@ -47,7 +47,7 @@ function SkillBar({ name, percentage, color, icon, category }: SkillBarProps) {
 
   return (
     <motion.div
-      className="mb-6 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+      className="mb-6 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80"
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.4 }}
@@ -66,7 +66,7 @@ function SkillBar({ name, percentage, color, icon, category }: SkillBarProps) {
           {category}
         </span>
       </div>
-      <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden" ref={ref}>
+      <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden" ref={ref}>
         <motion.div
           className="h-full rounded-full relative overflow-hidden"
           style={{ backgroundColor: color }}
@@ -75,7 +75,7 @@ function SkillBar({ name, percentage, color, icon, category }: SkillBarProps) {
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
         >
           <motion.div
-            className="absolute inset-0 bg-white opacity-20"
+            className="absolute inset-0 bg-white opacity-30"
             animate={{ x: [-100, 100] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
             style={{ width: "30%" }}
@@ -83,7 +83,7 @@ function SkillBar({ name, percentage, color, icon, category }: SkillBarProps) {
         </motion.div>
       </div>
       <div className="mt-2.5 flex justify-between items-center">
-        <span className="text-xs text-gray-400 font-medium">숙련도</span>
+        <span className="text-xs text-gray-500 font-medium">숙련도</span>
         <span className="text-sm font-bold text-gray-700">{percentage}%</span>
       </div>
     </motion.div>
@@ -161,8 +161,7 @@ function CircularChart({ skills }: { skills: any[] }) {
           {/* 중앙 텍스트 */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
-
-              <div className="text-sm text-gray-500">전체 평균</div>
+              <div className="text-sm text-gray-600">전체 평균</div>
               <div className="text-lg font-semibold text-blue-600">
                 {Math.round(categoryAverages.reduce((sum, cat) => sum + cat.percentage, 0) / categoryAverages.length)}%
               </div>
@@ -176,7 +175,7 @@ function CircularChart({ skills }: { skills: any[] }) {
         {categoryAverages.map((category, index) => (
           <motion.div
             key={category.category}
-            className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 shadow-sm"
+            className="flex items-center justify-between p-3 bg-white/60 backdrop-blur-sm rounded-lg border border-white/40 shadow-lg hover:bg-white/80 transition-colors"
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -189,7 +188,7 @@ function CircularChart({ skills }: { skills: any[] }) {
               <span className="font-medium text-gray-800">{category.category}</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">{category.skills.length}개</span>
+              <span className="text-sm text-gray-600">{category.skills.length}개</span>
               <span className="font-bold text-gray-700">{category.percentage}%</span>
             </div>
           </motion.div>
@@ -235,28 +234,28 @@ export default function SkillBarChart() {
     <div className="space-y-6">
       {/* 토글 버튼 */}
       <div className="flex justify-center mb-8">
-        <div className="bg-gray-100 p-1 rounded-xl flex space-x-1">
+        <div className="bg-white/60 backdrop-blur-sm p-1 rounded-xl flex space-x-1 border border-white/40 shadow-lg">
           <button
             onClick={() => setViewType('bar')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
               viewType === 'bar' 
-                ? 'bg-white text-blue-600 shadow-sm' 
-                : 'text-gray-600 hover:text-gray-800'
+                ? 'bg-blue-600 text-white shadow-lg' 
+                : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
             }`}
           >
             <HiViewGrid size={18} />
-
+            <span>바 차트</span>
           </button>
           <button
             onClick={() => setViewType('circular')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
               viewType === 'circular' 
-                ? 'bg-white text-blue-600 shadow-sm' 
-                : 'text-gray-600 hover:text-gray-800'
+                ? 'bg-blue-600 text-white shadow-lg' 
+                : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
             }`}
           >
             <HiChartPie size={18} />
-
+            <span>원형 차트</span>
           </button>
         </div>
       </div>

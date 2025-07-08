@@ -13,17 +13,10 @@ import { useState, useEffect, useRef } from "react";
 export default function Home() {
   const [showCursor, setShowCursor] = useState(true);
   const containerRef = useRef(null);
-  const skillsRef = useRef(null);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
-  });
-
-  // Skills Section 스크롤 진행도
-  const { scrollYProgress: skillsScrollProgress } = useScroll({
-    target: skillsRef,
-    offset: ["start end", "start start"]
   });
 
   // Welcome 컨텐츠 애니메이션 - 더 천천히 사라지도록
@@ -35,10 +28,6 @@ export default function Home() {
   const heroOpacity = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
   const heroY = useTransform(scrollYProgress, [0.2, 0.6], [50, 0]);
   const heroScale = useTransform(scrollYProgress, [0.2, 1.0], [1.1, 1]);
-
-  // Skills Section 페이드 인 애니메이션
-  const skillsOpacity = useTransform(skillsScrollProgress, [0, 0.6], [0, 1]);
-  const skillsY = useTransform(skillsScrollProgress, [0, 0.6], [50, 0]);
 
   useEffect(() => {
     // Toggle cursor visibility every 500ms for code block
@@ -139,27 +128,17 @@ export default function Home() {
       </div>
 
       {/* Skills Section */}
-      <motion.div 
-        id="skills" 
-        className="w-full bg-gray-50"
-        ref={skillsRef}
-        style={{
-          y: skillsY,
-          opacity: skillsOpacity
-        }}
-      >
+      <div id="skills">
         <SkillsContent />
-      </motion.div>
+      </div>
 
       {/* Projects Section */}
-      <div id="projects" className="w-full min-h-screen overflow-visible relative bg-white">
-        <div className="max-w-6xl mx-auto px-6 pt-24 pb-16">
-          <ProjectsSection />
-        </div>
+      <div id="projects">
+        <ProjectsSection />
       </div>
 
       {/* Thank You Section */}
-      <div id="thank-you" className="w-full min-h-screen overflow-visible relative bg-gray-50">
+      <div id="thank-you" className="w-full min-h-screen overflow-visible relative bg-white">
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-16">
           <ThankYouSection />
         </div>

@@ -87,7 +87,7 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
               <div className="flex items-center space-x-4">
                 <div 
                   className="p-3 rounded-2xl text-3xl"
-                  style={{ backgroundColor: `${skill.color}20` }}
+                  style={{ backgroundColor: `${skill.color}` }}
                 >
                   {skill.icon}
                 </div>
@@ -396,8 +396,8 @@ export default function SkillsContent() {
     },
   ];
 
-  // 무한 캐러셀을 위해 스킬을 3번 복제
-  const infiniteSkills = [...skills, ...skills, ...skills];
+  // 무한 캐러셀을 위해 스킬을 여러번 복제
+  const infiniteSkills = [...skills, ...skills, ...skills, ...skills, ...skills];
 
   const handleSkillClick = (skill: Skill) => {
     setSelectedSkill(skill);
@@ -410,7 +410,7 @@ export default function SkillsContent() {
   };
 
   return (
-    <div className="w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-900" ref={containerRef}>
+    <div className="w-full bg-black text-white" ref={containerRef}>
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -446,8 +446,20 @@ export default function SkillsContent() {
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
         {/* 배경 패턴 */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
+          
+          {/* 홀로그램 그리드 */}
+          <div 
+            className="absolute inset-0 opacity-5"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '80px 80px'
+            }}
+          />
         </div>
 
         <div className="text-center max-w-4xl mx-auto px-6 relative z-10">
@@ -457,9 +469,9 @@ export default function SkillsContent() {
               opacity: headerOpacity
             }}
           >
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              SKILLS
-            </h1>
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            SKILLS
+          </h1>
             
           </motion.div>
           
@@ -472,11 +484,11 @@ export default function SkillsContent() {
               className="text-center"
             >
               
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-300 text-lg">
                 빠르게 변화하는 프론트엔드 기술을 학습하고 적용합니다.
               </p>
             </motion.div>
-          </div>
+      </div>
 
         {/* 무한 캐러셀 컨테이너 */}
         <div 
@@ -486,23 +498,25 @@ export default function SkillsContent() {
         >
           <motion.div
             className="flex space-x-12"
-            animate={{
-              x: isPaused ? undefined : [0, -33.33 * (skills.length * 240 + 48 * skills.length)]
+            animate={isPaused ? {} : {
+              x: [0, -(skills.length * (240 + 48))]
             }}
             transition={{
-              duration: isPaused ? 0 : skills.length * 30,
+              duration: skills.length * 2,
               ease: "linear",
-              repeat: isPaused ? 0 : Infinity,
+              repeat: Infinity,
+              repeatType: "loop"
             }}
             style={{ width: 'fit-content' }}
           >
             {infiniteSkills.map((skill, index) => (
               <motion.div
                 key={`${skill.name}-${index}`}
-                className="flex-shrink-0 w-56 bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                className="flex-shrink-0 w-56 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer"
                 whileHover={{ 
                   scale: 1.05,
-                  backgroundColor: "rgba(255, 255, 255, 0.9)"
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  boxShadow: "0 0 30px rgba(59, 130, 246, 0.2)"
                 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -525,16 +539,16 @@ export default function SkillsContent() {
                   </motion.div>
                   
                   <div className="space-y-3 w-full">
-                    <h3 className="font-semibold text-gray-800 text-lg">
+                    <h3 className="font-semibold text-white text-lg">
                       {skill.name}
                     </h3>
                     
-                    <div className="text-xs text-gray-500 px-2 py-1 bg-gray-100 rounded-full">
+                    <div className="text-xs text-gray-300 px-2 py-1 bg-white/10 rounded-full backdrop-blur-sm">
                       {skill.category}
                     </div>
                     
                     {/* 숙련도 바 */}
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-white/20 rounded-full h-3">
                       <motion.div
                         className="h-3 rounded-full relative overflow-hidden"
                         style={{ backgroundColor: skill.color }}
@@ -552,11 +566,11 @@ export default function SkillsContent() {
                       </motion.div>
                     </div>
                     
-                    <span className="text-sm font-bold text-gray-700">
+                    <span className="text-sm font-bold text-gray-200">
                       {skill.level}%
                     </span>
                     
-                    <p className="text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
                       클릭하여 상세 정보 보기
                     </p>
                   </div>
@@ -565,7 +579,7 @@ export default function SkillsContent() {
             ))}
           </motion.div>
         </div>
-         </div>
+          </div>
         </section>
 
       {/* 스킬 모달 */}
@@ -603,7 +617,7 @@ export default function SkillsContent() {
           >
             <SkillBarChart />
           </motion.div>
-        </div>
+      </div>
       </section>
       */}
     </div>

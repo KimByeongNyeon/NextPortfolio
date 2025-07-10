@@ -303,33 +303,7 @@ export default function HeroSection() {
             ))}
           </motion.div>
 
-          {/* CTA 버튼 */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 3.8 }}
-            className="pt-4"
-          >
-            <motion.button
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 0 30px rgba(59, 130, 246, 0.5)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-2xl font-semibold text-lg overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative z-10 flex items-center gap-2">
-                프로젝트 보러가기
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  →
-                </motion.span>
-              </span>
-            </motion.button>
-          </motion.div>
+          
         </motion.div>
       </div>
 

@@ -117,8 +117,8 @@ export const projects: Project[] = [
     techStack: {
       frontend: ["Vue.js", "JavaScript", "HTML5", "CSS3"],
       backend: ["Django", "Python", "Django REST Framework"],
-      database: ["SQLite", "PostgreSQL"],
-      deployment: ["Heroku"],
+      database: ["SQLite"],
+    //   deployment: [""],
       tools: ["Git", "Postman", "Figma"]
     },
     features: [

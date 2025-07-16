@@ -10,6 +10,7 @@ import { FaVuejs, FaReact, FaJava, FaPython, FaTrophy } from "react-icons/fa";
 import { SiDjango, SiSpringboot, SiKotlin, SiTypescript, SiNextdotjs, SiFastapi } from "react-icons/si";
 import { Project, TechIcon } from "@/types/project";
 import { projects } from "@/lib/projectData";
+import { developerLottie } from "@/lib/lottie_developer";
 
 // 아이콘 매핑 함수
 const getTechIcon = (iconInfo: TechIcon) => {
@@ -30,56 +31,7 @@ const getTechIcon = (iconInfo: TechIcon) => {
 };
 
 // 개발중 Lottie 애니메이션 데이터 (코딩하는 애니메이션)
-const developmentAnimationData = {
-  "v": "5.7.4",
-  "fr": 60,
-  "ip": 0,
-  "op": 120,
-  "w": 800,
-  "h": 600,
-  "nm": "Development",
-  "ddd": 0,
-  "assets": [],
-  "layers": [
-    {
-      "ddd": 0,
-      "ind": 1,
-      "ty": 4,
-      "nm": "laptop",
-      "sr": 1,
-      "ks": {
-        "o": { "a": 0, "k": 100 },
-        "r": { "a": 0, "k": 0 },
-        "p": { "a": 0, "k": [400, 300] },
-        "a": { "a": 0, "k": [0, 0] },
-        "s": { "a": 0, "k": [100, 100] }
-      },
-      "ao": 0,
-      "shapes": [
-        {
-          "ty": "gr",
-          "it": [
-            {
-              "ty": "rc",
-              "d": 1,
-              "s": { "a": 0, "k": [200, 120] },
-              "p": { "a": 0, "k": [0, 0] },
-              "r": { "a": 0, "k": 10 }
-            },
-            {
-              "ty": "fl",
-              "c": { "a": 0, "k": [0.2, 0.3, 0.4, 1] },
-              "o": { "a": 0, "k": 100 }
-            }
-          ]
-        }
-      ],
-      "ip": 0,
-      "op": 120,
-      "st": 0
-    }
-  ]
-};
+const developmentAnimationData = developerLottie;
 
 // 이미지 컴포넌트 with 에러 처리
 const ProjectImage = ({ 

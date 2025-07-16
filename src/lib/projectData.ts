@@ -146,6 +146,21 @@ export const projects: Project[] = [
         ]
       }
     ],
+    challenges: [
+        "FE 프레임워크를 처음 사용하여 프로젝트 진행",
+        "상태관리 라이브러리 선택",
+        "실시간 암호화폐 시세 조회",
+      ],
+      solutions: [
+        "Vue.js 학습 및 적용",
+        "pinia를 통한 상태관리",
+        "캔들 차트 라이브러리 적용",
+      ],
+      learnings: [
+        "FE 프레임워크 프로젝트 경험",
+        "기존 props와 pinia를 통한 상태관리의 차이 학습",
+        "Vue.js의 특징 학습",
+      ],
     githubLink: "https://github.com/KimByeongNyeon/SSAFY_Final_PJT",
     year: "2024",
     month: "10 ~ 11",
@@ -207,6 +222,23 @@ export const projects: Project[] = [
         ]
       }
     ],
+    challenges: [
+        "JS 가 아닌 Kotlin",
+        "Kotlin 에서의 API 통신 방식",
+        "OAuth2.0 를 통한 소셜 로그인",
+        "UI 설계"
+      ],
+      solutions: [
+        "하루 4시간씩 공부하며 프로젝트 진행",
+        "Retrofit2 를 통한 API 통신",
+        "Kakao, Naver의 개발자 문서 학습을 통해 구현",
+        "constraintlayout 를 통한 레이아웃 설계",
+      ],
+      learnings: [
+        "Kotlin 프로젝트 경험",
+        "웹과 모바일의 HTTP 통신의 차이점 학습",
+        "웹 FE 에서가 아닌 모바일에서의 소셜 로그인 경험",
+      ],
     githubLink: "https://github.com/KimByeongNyeon/MBG",
     year: "2025",
     month: "01 ~ 02",
@@ -242,6 +274,7 @@ export const projects: Project[] = [
     },
     features: [
       "프론트엔드 전체적인 아키텍처 및 UI", 
+      "내 계좌 확인 및 주 거래 통장 설정",
       "개인 소비패턴 분석", 
       "1:1 퀴즈 게임", 
       "채팅", 
@@ -270,6 +303,21 @@ export const projects: Project[] = [
         ]
       }
     ],
+    challenges: [
+        "캐릭터 움직임 효과",
+        "1:1 퀴즈 대결 시스템",
+        "사용자 대기방 구현",
+        ],
+      solutions: [
+        "PIXI.js 적용",
+        "WebSocket + STOMP 채택",
+        "HTTP + WebSocket  + STOMP 통신",
+      ],
+      learnings: [
+        "용량이 큰 이미지가 렌더링 될 때 등등 렌더링이 오래 걸릴 경우 최적화 방법에 대한 학습",
+        "stateless, stateful 차이 학습",
+        "전역으로 사용할 훅과 계층으로 사용할 훅 분리",
+      ],
     githubLink: "https://github.com/KimByeongNyeon/FinCatch",
     year: "2025",
     month: "02 ~ 03",

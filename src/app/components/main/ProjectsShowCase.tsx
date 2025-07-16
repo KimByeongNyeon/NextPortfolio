@@ -458,7 +458,7 @@ function ProjectDetailModal({
               {/* 상세 기능 섹션 */}
               {project.detailedFeatures && (
                 <section>
-                  <h3 className="text-2xl font-bold text-white mb-6">주요 기능</h3>
+                  <h3 className="text-2xl font-bold text-white mb-6">내가 담당한 기능</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {project.detailedFeatures.map((featureGroup, index) => (
                       <motion.div
@@ -884,7 +884,7 @@ function ProjectSection({
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <h4 className="text-sm font-semibold text-gray-400 mb-3">주요 기능</h4>
+            <h4 className="text-sm font-semibold text-gray-400 mb-3">내가 담당한 기능</h4>
             {project.features.slice(0, 3).map((feature, idx) => (
               <motion.div
                 key={idx}

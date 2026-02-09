@@ -39,12 +39,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   // 기본 렌더링: 애니메이션 없이 직접 렌더링
   return (
-    <article className="max-w-4xl mx-auto px-4 py-8">
-      <BlogPostHeader post={post} formattedDate={formattedDate} />
-      <BlogPostContent content={content} />
-      <BlogPostTags tags={post.tags} />
-      <BlogPostNavigation prevPost={prevPost} nextPost={nextPost} />
-    </article>
+    <div className="min-h-screen bg-white text-gray-900 transition-colors duration-500">
+      <article className="max-w-4xl mx-auto px-4 py-8">
+        <BlogPostHeader post={post} formattedDate={formattedDate} />
+        <BlogPostContent content={content} />
+        <BlogPostTags tags={post.tags} />
+        <BlogPostNavigation prevPost={prevPost} nextPost={nextPost} />
+      </article>
+    </div>
   );
 
   // 참고: 애니메이션을 다시 사용하려면 아래 코드를 활성화하고 위 return문을 주석 처리하세요

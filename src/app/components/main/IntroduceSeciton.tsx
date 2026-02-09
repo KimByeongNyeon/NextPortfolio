@@ -1,264 +1,122 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
 export default function IntroduceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
 
-  const skills = [
-    "React", "Next.js", "TypeScript", "Vue.js", "Tailwind CSS"
+  const skillGroups = [
+    { name: "Front-end", skills: ["TypeScript", "JavaScript", "React.js", "Next.js"] },
+    { name: "Data & State", skills: ["Tanstack-query", "Redux-toolkit", "Zustand"] },
+    { name: "Tools", skills: ["Git / Github", "VScode / Cursor"] },
+    { name: "Collaboration", skills: ["Figma", "Jira"] }
   ];
 
-  // 내가 어떤 사람인지 설명하는 데이터
-  const personalityTraits = [
+  const education = [
     {
-      icon: "⚡",
-      title: "능동적인 개발자",
-      description: "문제를 발견하면 기다리지 않고 직접 해결책을 찾아 실행합니다. 주도적으로 학습하고 도전합니다.",
-      gradient: "from-yellow-400 to-orange-500"
+      period: "2024 ~ 2025",
+      title: "삼성 청년 SW 아카데미 (SSAFY)",
+      description: "Python 기반 컴퓨팅 사고력 교육 및 Vue, Django 기반 프로젝트를 통해 기초를 다졌으며, TS/React 기반 실무 프로젝트로 기획부터 배포까지 전 과정을 경험했습니다."
     },
     {
-      icon: "🏗️",
-      title: "구조적 사고",
-      description: "좋은 구조가 좋은 코드를 만든다고 믿습니다. 확장 가능하고 유지보수하기 쉬운 아키텍처를 설계합니다.",
-      gradient: "from-blue-400 to-cyan-500"
-    },
-    {
-      icon: "👤",
-      title: "사용자 관점",
-      description: "개발할 때 항상 '내가 사용자라면?' 이라고 생각합니다. 사용자의 입장에서 경험을 설계합니다.",
-      gradient: "from-purple-400 to-pink-500"
-    },
-    {
-      icon: "🔄",
-      title: "지속적 개선",
-      description: "현재에 안주하지 않고 더 나은 방법을 찾기 위해 끊임없이 고민하고 개선해나갑니다.",
-      gradient: "from-green-400 to-emerald-500"
+      period: "2023 ~ 2024",
+      title: "쌍용 교육센터",
+      description: "Java 기반 풀스택 교육과정으로 JSP 기반 프로젝트를 통해 웹 프로그래밍의 기초를 습득하였습니다."
     }
   ];
 
-  const values = [
-    {
-      title: "능동적 문제해결",
-      description: "문제를 마주했을 때 수동적으로 기다리지 않고, 적극적으로 해결방안을 모색하고 실행에 옮깁니다.",
-      icon: "🎯"
-    },
-    {
-      title: "탄탄한 설계",
-      description: "좋은 구조가 좋은 코드를 만든다는 신념으로, 확장성과 유지보수성을 고려한 설계를 중요시합니다.",
-      icon: "🏛️"
-    },
-    {
-      title: "사용자 중심 개발",
-      description: "개발자 편의가 아닌 사용자의 관점에서 생각하며, 실제 사용자가 되어 경험해보는 것을 중요하게 생각합니다.",
-      icon: "❤️"
-    }
+  const awards = [
+    "SSAFY 기업 연계 프로젝트 최우수상 수상",
+    "SSAFY 전국 프로젝트 발표회 입상"
   ];
 
-  // 패럴랙스 효과
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6 }
+  };
 
   return (
-    <section ref={sectionRef} id="about" className="min-h-screen py-20 bg-black relative overflow-hidden">
-      {/* 배경 기하학적 패턴 */}
-      <div className="absolute inset-0 opacity-5">
-        <motion.div 
-          style={{ y: backgroundY }}
-          className="absolute inset-0"
-        >
-          {/* 기하학적 도형들 */}
-          <div className="absolute top-20 left-20 w-32 h-32 border border-white/20 rotate-45" />
-          <div className="absolute top-40 right-32 w-24 h-24 bg-blue-500/10 rounded-full" />
-          <div className="absolute bottom-40 left-40 w-40 h-40 border border-purple-500/20 rounded-full" />
-          <div className="absolute bottom-20 right-20 w-28 h-28 border border-white/20" />
-          
-          {/* 그리드 패턴 */}
-          <div className="absolute inset-0" 
-               style={{
-                 backgroundImage: `
-                   linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                   linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-                 `,
-                 backgroundSize: '50px 50px'
-               }} 
-          />
-        </motion.div>
-      </div>
-
-      {/* 메인 콘텐츠 */}
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <motion.div
-          style={{ y: textY }}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <motion.h2 
-            className="text-6xl md:text-8xl font-bold text-white mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            ABOUT ME
-          </motion.h2>
-          
-          {/* 언더라인 애니메이션 */}
-          <motion.div 
-            className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"
-            initial={{ width: 0 }}
-            animate={{ width: 128 }}
-            transition={{ duration: 1, delay: 0.8 }}
-          />
+    <section ref={sectionRef} id="about" className="py-32 bg-white dark:bg-black text-gray-700 dark:text-gray-200 transition-colors duration-500">
+      <div className="max-w-4xl mx-auto px-6">
+        
+        {/* Header */}
+        <motion.div {...fadeIn} className="mb-20">
+          <h3 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+            소통과 성장을 우선시하는 개발자 입니다.<br/>
+          </h3>
         </motion.div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-20 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="space-y-8"
-          >
-            {/* 프로필 이미지 with 독특한 디자인 */}
-            <div className="relative mx-auto lg:mx-0 w-fit">
-              <div className="relative w-80 h-80">
-                {/* 회전하는 링 */}
-                <motion.div 
-                  className="absolute inset-0 border-2 border-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                />
-                <motion.div 
-                  className="absolute inset-4 border border-white/20 rounded-full"
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                />
-                
-                {/* 실제 이미지 */}
-                <div className="absolute inset-8 rounded-full overflow-hidden bg-gray-800/50 backdrop-blur-sm">
-                  <Image
-                    src="/assets/profile.png"
-                    alt="Profile"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-
-                {/* 플로팅 아이콘들 */}
-                <motion.div 
-                  className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 backdrop-blur-sm rounded-full flex items-center justify-center"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <span className="text-2xl">💻</span>
-                </motion.div>
-                <motion.div 
-                  className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 backdrop-blur-sm rounded-full flex items-center justify-center"
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                >
-                  <span className="text-2xl">🚀</span>
-                </motion.div>
-              </div>
+        {/* Profile & Bio */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
+          <motion.div {...fadeIn} className="md:col-span-4">
+            <div className="relative aspect-square rounded-2xl overflow-hidden grayscale-0 transition-all duration-700 border border-white/10">
+              <Image 
+                src="/assets/profile.png" 
+                alt="Kim Byeongnyeon" 
+                fill 
+                className="object-cover"
+              />
             </div>
-
-            {/* 텍스트 소개 */}
-            <motion.div 
-              className="text-center lg:text-left bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <h3 className="text-4xl font-bold text-white mb-6">
-                안녕하세요! 👋
-              </h3>
-              <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                사용자 경험을 최우선으로 생각하는 프론트엔드 개발자입니다. 
-                최신 기술을 활용해 아름답고 기능적인 웹 애플리케이션을 만드는 것을 좋아합니다.
-                항상 새로운 도전을 통해 성장하고 있습니다.
-              </p>
-              
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                {skills.map((skill, index) => (
-                  <motion.span
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    transition={{ duration: 0.3, delay: 0.8 + index * 0.1 }}
-                    className="px-5 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-white/20 text-white rounded-full text-sm font-medium backdrop-blur-sm hover:from-blue-500/30 hover:to-purple-500/30 transition-all cursor-pointer"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="space-y-6"
-          >
-            <div className="text-center lg:text-left mb-10">
-              <h4 className="text-3xl font-bold text-white mb-4">
-                저는 이런 사람입니다
-              </h4>
-              <div className="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto lg:mx-0" />
-            </div>
-            
-            <div className="grid gap-6">
-              {personalityTraits.map((trait, index) => (
-                <motion.div
-                  key={trait.title}
-                  initial={{ opacity: 0, y: 30, rotateX: -15 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  transition={{ 
-                    duration: 0.8, 
-                    delay: 0.8 + index * 0.15,
-                    type: "spring",
-                    stiffness: 100
-                  }}
-                  whileHover={{ 
-                    scale: 1.02, 
-                    y: -5,
-                    transition: { duration: 0.2 }
-                  }}
-                  className="group relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r ${trait.gradient} opacity-0 group-hover:opacity-20 rounded-2xl transition-opacity duration-300" />
-                  <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300">
-                    <div className="flex items-start gap-4">
-                      <div className="text-3xl p-3 bg-white/10 rounded-xl backdrop-blur-sm">
-                        {trait.icon}
-                      </div>
-                      <div className="flex-1">
-                        <h5 className="font-bold text-white text-xl mb-3 group-hover:text-white group-hover:bg-gradient-to-r group-hover:${trait.gradient} group-hover:bg-clip-text transition-all duration-300">
-                          {trait.title}
-                        </h5>
-                        <p className="text-gray-300 leading-relaxed">
-                          {trait.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <motion.div {...fadeIn} transition={{ delay: 0.2 }} className="md:col-span-8 space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+            <p>
+              반복을 줄이고 유지보수성을 높이기 위해 항상 <span className="text-gray-900 dark:text-white font-semibold">효율적인 아키텍처 설계</span>를 고민합니다. 
+              기존의 반복되던 코드를 커스텀 훅으로 분리해 재사용한 구조를 만드는 데 강점이 있으며, 
+              실제로 API 통신 효율화를 위해
+              <Link href="https://www.npmjs.com/package/react-easy-api"> <span className="text-blue-500 font-medium">react-easy-api</span></Link> 라이브러리를 제작한 바 있습니다.
+            </p>
+            <p>
+              동료들과 함께 성장하는 가치를 믿습니다. SSAFY 프로젝트 당시 Git에 서툰 팀원들을 위한 교육 세션을 진행하고, 
+              React가 처음인 팀원에게 컴포넌트 설계와 훅 사용법을 공유하며 적극적으로 도움을 주었습니다. 
+              이러한 노력으로 팀원들로부터 높은 신뢰를 얻어 <span className="text-gray-900 dark:text-white font-medium">'이달의 동료'</span>에 선정되기도 했습니다.
+            </p>
+            <p>
+              개발자도 한 명의 사용자라는 생각으로, <span className="text-gray-900 dark:text-white font-semibold">사용자 관점의 기술적 가치</span>를 전달하려 노력합니다. 
+              최종 프로젝트 발표회 당시 비개발자 심사위원들에게 서비스의 핵심 문제를 직관적으로 설명하여 
+              전달력과 완성도 면에서 긍정적인 평가를 받은 바 있습니다.
+            </p>
           </motion.div>
         </div>
 
-        
+        {/* Skills Section */}
 
-        
+        {/* Education & Awards Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 pt-12 border-t border-gray-100 dark:border-white/5">
+          {/* Education */}
+          <motion.div {...fadeIn}>
+            <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Education</h4>
+            <div className="space-y-10">
+              {education.map((item) => (
+                <div key={item.title}>
+                  <span className="text-sm font-mono text-blue-500 mb-2 block">{item.period}</span>
+                  <h5 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{item.title}</h5>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Awards */}
+          <motion.div {...fadeIn}>
+            <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Awards</h4>
+            <ul className="space-y-6">
+              {awards.map((award) => (
+                <li key={award} className="flex items-start gap-3">
+                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-lg leading-snug">{award}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
+
       </div>
     </section>
   );

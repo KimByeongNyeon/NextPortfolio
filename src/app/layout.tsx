@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import TransitionProvider from "./components/TransitionProvider";
 import Background from "./components/Background";
+import { ThemeProvider } from "./components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -73,14 +74,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="font-sans antialiased relative min-h-screen">
-        <Background />
-        <Navbar />
-        <main>
-          <TransitionProvider>{children}</TransitionProvider>
-        </main>
-        
+    <html lang="ko" suppressHydrationWarning>
+      <body className="font-sans antialiased relative min-h-screen transition-colors duration-300">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Background />
+          <Navbar />
+          <main>
+            <TransitionProvider>{children}</TransitionProvider>
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -5,10 +5,10 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from "fra
 import Link from "next/link";
 import Image from "next/image";
 import Lottie from "lottie-react";
-import { FiExternalLink, FiGithub, FiArrowDown, FiX, FiEye, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiExternalLink, FiGithub, FiArrowDown, FiX, FiEye, FiChevronLeft, FiChevronRight, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { FaVuejs, FaReact, FaJava, FaPython, FaTrophy } from "react-icons/fa";
 import { SiDjango, SiSpringboot, SiKotlin, SiTypescript, SiNextdotjs, SiFastapi } from "react-icons/si";
-import { Project, TechIcon } from "@/types/project";
+import { Project, TechIcon, Troubleshooting } from "@/types/project";
 import { projects } from "@/lib/projectData";
 import { developerLottie } from "@/lib/lottie_developer";
 
@@ -57,16 +57,16 @@ const ProjectImage = ({
 
   if (imageError) {
     return (
-      <div className={`${className} bg-gray-800 flex flex-col items-center justify-center relative overflow-hidden`}>
+      <div className={`${className} bg-gray-100 dark:bg-gray-800 flex flex-col items-center justify-center relative overflow-hidden transition-colors`}>
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20" />
         
         <div className="relative z-10 flex flex-col items-center justify-center text-center p-8">
           {/* 간단한 CSS 애니메이션으로 코딩 애니메이션 구현 */}
           <div className="mb-6">
             <div className="relative">
-              <div className="w-32 h-20 bg-gray-700 rounded-lg shadow-lg transform perspective-1000 rotate-x-12">
+              <div className="w-32 h-20 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-lg transform perspective-1000 rotate-x-12 transition-colors">
                 {/* 노트북 화면 */}
-                <div className="w-full h-full bg-gray-900 rounded-lg p-2 relative overflow-hidden">
+                <div className="w-full h-full bg-gray-100 dark:bg-gray-900 rounded-lg p-2 relative overflow-hidden transition-colors">
                   <div className="space-y-1">
                     {/* 코드 라인들 */}
                     <motion.div 
@@ -128,8 +128,8 @@ const ProjectImage = ({
             transition={{ delay: 0.5 }}
             className="text-center"
           >
-            <h3 className="text-xl font-bold text-white mb-2">개발 진행중</h3>
-            <p className="text-gray-400 text-sm mb-4">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">개발 진행중</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 transition-colors">
               아직 진행중인 프로젝트입니다
             </p>
             
@@ -189,6 +189,50 @@ const ProjectImage = ({
         onError={handleImageError}
         onLoad={handleImageLoad}
       />
+    </div>
+  );
+};
+
+// 트러블 슈팅 아이템 컴포넌트
+const TroubleshootingItem = ({ item }: { item: Troubleshooting }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden mb-4 last:mb-0">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left"
+      >
+        <span className="font-semibold text-gray-900 dark:text-white">{item.title}</span>
+        {isOpen ? <FiChevronUp className="text-gray-400" /> : <FiChevronDown className="text-gray-400" />}
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="p-4 bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-300 text-sm leading-relaxed border-t border-gray-100 dark:border-gray-800 whitespace-pre-wrap">
+              {item.content}
+              {item.link && (
+                <div className="mt-4 flex justify-end">
+                  <Link
+                    href={item.link}
+                    target="_blank"
+                    className="flex items-center space-x-1 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors font-medium"
+                  >
+                    <span>자세히 보기</span>
+                    <FiExternalLink size={14} />
+                  </Link>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -263,7 +307,7 @@ function ProjectDetailModal({
           onClick={onClose}
         >
           <motion.div
-            className="bg-gray-900 rounded-3xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl custom-scrollbar"
+            className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl custom-scrollbar border border-gray-200 dark:border-white/10"
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -271,37 +315,37 @@ function ProjectDetailModal({
             onClick={(e) => e.stopPropagation()}
           >
             {/* 헤더 */}
-            <div className="relative p-8 pb-6 border-b border-gray-800">
+            <div className="relative p-8 pb-6 border-b border-gray-100 dark:border-gray-800">
               <button
                 onClick={onClose}
-                className="absolute top-6 right-6 p-2 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white"
+                className="absolute top-6 right-6 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-gray-900 dark:hover:text-white"
               >
                 <FiX size={24} />
               </button>
 
               <div className="pr-16">
                 <div className="flex items-center space-x-4 mb-4">
-                  <span className="text-sm text-gray-400">{project.year}</span>
-                  <span className="text-sm text-gray-400 font-mono">{project.month}</span>
-                  <span className="text-sm text-gray-400">• {project.duration}</span>
+                  <span className="text-sm text-gray-500">{project.year}</span>
+                  <span className="text-sm text-gray-500 font-mono">{project.month}</span>
+                  <span className="text-sm text-gray-500">• {project.duration}</span>
                   
                   {project.award && (
-                    <span className="flex items-center space-x-1 px-3 py-1 bg-yellow-900 text-yellow-300 rounded-full text-xs">
+                    <span className="flex items-center space-x-1 px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-full text-xs font-semibold">
                       <FaTrophy size={12} />
                       <span>{project.award.rank}</span>
                     </span>
                   )}
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">
                   {project.title}
                 </h1>
-                <h2 className="text-xl text-gray-300 mb-4">
+                <h2 className="text-xl text-gray-600 dark:text-gray-300 mb-4">
                   {project.subtitle}
                 </h2>
                 
                 {project.detailedDescription && (
-                  <p className="text-gray-400 text-lg leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
                     {project.detailedDescription}
                   </p>
                 )}
@@ -311,21 +355,21 @@ function ProjectDetailModal({
                   {project.teamSize && (
                     <div>
                       <span className="text-gray-500">팀 규모:</span>
-                      <span className="text-white ml-2">{project.teamSize}명</span>
+                      <span className="text-gray-900 dark:text-white ml-2">{project.teamSize}명</span>
                     </div>
                   )}
                   {project.role && (
                     <div>
                       <span className="text-gray-500">담당 역할:</span>
-                      <span className="text-white ml-2">{project.role}</span>
+                      <span className="text-gray-900 dark:text-white ml-2">{project.role}</span>
                     </div>
                   )}
                   <div>
                     <span className="text-gray-500">상태:</span>
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
-                      project.status === 'completed' ? 'bg-green-900 text-green-300' :
-                      project.status === 'in-progress' ? 'bg-blue-900 text-blue-300' :
-                      'bg-gray-700 text-gray-300'
+                    <span className={`ml-2 px-2 py-1 rounded text-xs transition-colors ${
+                      project.status === 'completed' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' :
+                      project.status === 'in-progress' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' :
+                      'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'
                     }`}>
                       {project.status === 'completed' ? '완료' : 
                        project.status === 'in-progress' ? '진행중' : '계획'}
@@ -335,10 +379,10 @@ function ProjectDetailModal({
               </div>
             </div>
 
-            <div className="p-8 space-y-8">
+            <div className="p-8 space-y-12">
               {/* 갤러리 섹션 */}
               <section>
-                <h3 className="text-2xl font-bold text-white mb-6">프로젝트 갤러리</h3>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">프로젝트 갤러리</h3>
                 <div className="relative">
                   <div className={`${
                     project.title === 'MBG(문방구)' ? 'aspect-[9/16]' : 'aspect-video'
@@ -354,13 +398,13 @@ function ProjectDetailModal({
                       <>
                         <button
                           onClick={prevImage}
-                          className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-colors text-white z-20"
+                          className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/30 dark:bg-black/50 hover:bg-black/50 dark:hover:bg-black/70 rounded-full transition-colors text-white z-20 backdrop-blur-sm"
                         >
                           <FiChevronLeft size={20} />
                         </button>
                         <button
                           onClick={nextImage}
-                          className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-colors text-white z-20"
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/30 dark:bg-black/50 hover:bg-black/50 dark:hover:bg-black/70 rounded-full transition-colors text-white z-20 backdrop-blur-sm"
                         >
                           <FiChevronRight size={20} />
                         </button>
@@ -385,18 +429,18 @@ function ProjectDetailModal({
 
               {/* 기술 스택 섹션 */}
               <section>
-                <h3 className="text-2xl font-bold text-white mb-6">기술 스택</h3>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">기술 스택</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {Object.entries(project.techStack).map(([category, techs]) => (
-                    <div key={category} className="bg-gray-800 rounded-xl p-4">
-                      <h4 className="text-lg font-semibold text-white mb-3 capitalize">
+                    <div key={category} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-white/5">
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 capitalize">
                         {category}
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {techs.map((tech, index) => (
                           <span
                             key={index}
-                            className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm"
+                            className="px-3 py-1 bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm border border-gray-200 dark:border-white/5"
                           >
                             {tech}
                           </span>
@@ -407,42 +451,96 @@ function ProjectDetailModal({
                 </div>
               </section>
 
-              {/* 상세 기능 섹션 */}
-              {project.detailedFeatures && (
+              {/* 기술적 선택과 이유 섹션 */}
+              {project.techChoices && (
                 <section>
-                  <h3 className="text-2xl font-bold text-white mb-6">내가 담당한 기능</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {project.detailedFeatures.map((featureGroup, index) => (
-                      <motion.div
-                        key={index}
-                        className="bg-gray-800 rounded-xl p-6"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                      >
-                        <h4 className="text-lg font-semibold text-white mb-4">
-                          {featureGroup.category}
-                        </h4>
-                        <ul className="space-y-2">
-                          {featureGroup.items.map((item, itemIndex) => (
-                            <li key={itemIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
-                              <span className="text-gray-300 text-sm leading-relaxed">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">기술적 선택과 이유</h3>
+                  <div className="space-y-6">
+                    {project.techChoices.map((choice, index) => (
+                      <div key={index} className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-800">
+                        <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-4">{choice.title}</h4>
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-wrap">{choice.reason}</p>
+                        
+                        {choice.table && (
+                          <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 transition-colors">
+                            <table className="w-full text-sm text-left">
+                              <thead className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors">
+                                <tr>
+                                  {choice.table.headers.map((header, i) => (
+                                    <th key={i} className="px-4 py-3 font-semibold border-b border-gray-200 dark:border-gray-700">
+                                      {header}
+                                    </th>
+                                  ))}
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                                {choice.table.rows.map((row, i) => (
+                                  <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                    {row.map((cell, j) => (
+                                      <td key={j} className={`px-4 py-3 text-gray-600 dark:text-gray-400 ${j === 1 ? 'text-blue-600 dark:text-blue-300/80' : ''} transition-colors`}>
+                                        {cell}
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </section>
               )}
 
-              {/* 도전과제 및 해결방법 */}
+              {/* 상세 기능 섹션 */}
+              {project.detailedFeatures && (
+                <section>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">구현 기능</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {project.detailedFeatures.map((featureGroup, index) => (
+                    <motion.div
+                      key={index}
+                      className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-white/5"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                        {featureGroup.category}
+                      </h4>
+                      <ul className="space-y-2">
+                        {featureGroup.items.map((item, itemIndex) => (
+                          <li key={itemIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
+                            <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+              )}
+
+              {/* 트러블 슈팅 섹션 */}
+              {project.troubleshooting && (
+                <section>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">트러블 슈팅</h3>
+                  <div>
+                    {project.troubleshooting.map((item, index) => (
+                      <TroubleshootingItem key={index} item={item} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* 도전과제 및 해결방법 - 데이터가 있을 때만 표시 */}
               {(project.challenges || project.solutions) && (
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {project.challenges && (
+                  {project.challenges && project.challenges.length > 0 && (
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-6">도전과제</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">도전과제</h3>
                       <div className="space-y-3">
                         {project.challenges.map((challenge, index) => (
                           <motion.div
@@ -459,9 +557,9 @@ function ProjectDetailModal({
                     </div>
                   )}
 
-                  {project.solutions && (
+                  {project.solutions && project.solutions.length > 0 && (
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-6">해결방법</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">해결방법</h3>
                       <div className="space-y-3">
                         {project.solutions.map((solution, index) => (
                           <motion.div
@@ -480,11 +578,32 @@ function ProjectDetailModal({
                 </section>
               )}
 
-              {/* 배운 점 */}
-              {project.learnings && (
+              {/* 회고 및 성장 섹션 */}
+              {project.retrospective && (
                 <section>
-                  <h3 className="text-2xl font-bold text-white mb-6">배운 점</h3>
-                  <div className="bg-blue-900/20 border border-blue-800/30 rounded-xl p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">회고 및 성장</h3>
+                <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-100 dark:border-gray-800 rounded-2xl p-8">
+                    <div className="prose prose-invert max-w-none">
+                      {project.retrospective.split('\n\n').map((paragraph, i) => (
+                        <p key={i} className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4 last:mb-0 whitespace-pre-wrap text-lg">
+                          {paragraph.split('`').map((part, j) => (
+                            j % 2 === 1 ? <code key={j} className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-blue-600 dark:text-blue-300 text-sm font-mono">{part}</code> : 
+                            part.split('**').map((subPart, k) => (
+                              k % 2 === 1 ? <strong key={k} className="text-gray-900 dark:text-white font-bold">{subPart}</strong> : subPart
+                            ))
+                          ))}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {/* 배운 점 - 기존 데이터 호환용 */}
+              {project.learnings && project.learnings.length > 0 && (
+                <section>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">배운 점</h3>
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 rounded-xl p-6 transition-colors">
                     <ul className="space-y-3">
                       {project.learnings.map((learning, index) => (
                         <motion.li
@@ -494,8 +613,8 @@ function ProjectDetailModal({
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-blue-200 leading-relaxed">{learning}</span>
+                          <div className="w-1.5 h-1.5 bg-blue-400 dark:bg-blue-500 rounded-full mt-2 flex-shrink-0" />
+                          <span className="text-blue-800 dark:text-blue-200 leading-relaxed font-medium transition-colors">{learning}</span>
                         </motion.li>
                       ))}
                     </ul>
@@ -504,7 +623,7 @@ function ProjectDetailModal({
               )}
 
               {/* 링크 섹션 */}
-              <section className="flex justify-center">
+              <section className="flex justify-center pt-8">
                 <div className="flex space-x-4">
                   {project.githubLink && (
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -577,7 +696,7 @@ export default function ProjectsShowcase() {
   };
 
   return (
-    <div className="w-full bg-black text-white">
+    <div className="w-full bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-500">
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -624,13 +743,13 @@ export default function ProjectsShowcase() {
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <span className="text-sm text-white mb-4">SCROLL TO EXPLORE</span>
-            <FiArrowDown className="text-white" size={24} />
+            <span className="text-sm text-gray-400 dark:text-gray-500 mb-4 transition-colors">SCROLL TO EXPLORE</span>
+            <FiArrowDown className="text-gray-400 dark:text-gray-500 transition-colors" size={24} />
           </motion.div>
         </div>
         
         {/* 배경 그라디언트 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black to-black opacity-80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 dark:via-black to-white dark:to-black opacity-80 transition-colors duration-500" />
       </section>
 
       {/* 프로젝트 섹션들 */}
@@ -661,7 +780,7 @@ export default function ProjectsShowcase() {
             <motion.div
               key={index}
               className={`w-2 h-8 rounded-full transition-all duration-300 ${
-                currentProject === index ? 'bg-white' : 'bg-gray-600'
+                currentProject === index ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
               }`}
               whileHover={{ scale: 1.2 }}
               initial={{ scale: 0 }}
@@ -728,21 +847,21 @@ function ProjectSection({
               </span>
               
               {project.award && (
-                <span className="flex items-center space-x-1 px-2 py-1 bg-yellow-900 text-yellow-300 rounded-md text-xs">
+                <span className="flex items-center space-x-1 px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md text-xs font-semibold transition-colors">
                   <FaTrophy size={12} />
-                  <span>최우수상</span>
+                  <span>{project.award.rank}</span>
                 </span>
               )}
             </div>
             
-            <h2 className="text-4xl md:text-6xl font-bold mb-2">
+            <h2 className="text-4xl md:text-6xl font-bold mb-2 text-gray-900 dark:text-white transition-colors">
               {project.title}
             </h2>
-            <h3 className="text-xl text-gray-400 mb-6">
+            <h3 className="text-xl text-gray-600 dark:text-gray-400 mb-6 transition-colors">
               {project.subtitle}
             </h3>
             
-            <p className="text-gray-300 text-lg leading-relaxed mb-8">
+            <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8 transition-colors">
               {project.description}
             </p>
 
@@ -751,7 +870,7 @@ function ProjectSection({
               {project.techIcons.map((iconInfo, idx) => (
                 <motion.div
                   key={idx}
-                  className="p-3 bg-gray-900 rounded-lg"
+                  className="p-3 bg-gray-100 dark:bg-gray-900 rounded-lg transition-colors border border-gray-200 dark:border-white/5"
                   whileHover={{ scale: 1.1, rotate: 360 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -779,7 +898,7 @@ function ProjectSection({
                 >
                   <Link
                     href={project.githubLink}
-                    className="flex items-center space-x-2 px-6 py-3 border border-gray-700 text-white rounded-lg hover:bg-gray-900 transition-colors"
+                    className="flex items-center space-x-2 px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-white rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
                     target="_blank"
                   >
                     <FiGithub size={20} />
@@ -794,7 +913,7 @@ function ProjectSection({
                 >
                   <Link
                     href={project.link}
-                    className="flex items-center space-x-2 px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors"
+                    className="flex items-center space-x-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-lg hover:bg-black dark:hover:bg-gray-100 transition-colors shadow-md"
                     target="_blank"
                   >
                     <FiExternalLink size={20} />

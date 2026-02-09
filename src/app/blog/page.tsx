@@ -30,14 +30,16 @@ export default async function BlogPage() {
 
   return (
     <PageTransition animationType="slide-left">
-      <div className="container mx-auto py-10 px-4">
-        <ScrollReveal>
-          <h1 className="text-3xl font-bold mb-6">블로그</h1>
-        </ScrollReveal>
+      <div className="min-h-screen bg-white text-gray-900 transition-colors duration-500">
+        <div className="container mx-auto py-10 px-4">
+          <ScrollReveal>
+            <h1 className="text-3xl font-bold mb-6 text-gray-900">블로그</h1>
+          </ScrollReveal>
 
-        <Suspense fallback={<div className="py-10 text-center">블로그 글을 불러오는 중...</div>}>
-          <BlogContent initialPosts={posts} />
-        </Suspense>
+          <Suspense fallback={<div className="py-10 text-center text-gray-500">블로그 글을 불러오는 중...</div>}>
+            <BlogContent initialPosts={posts} />
+          </Suspense>
+        </div>
       </div>
     </PageTransition>
   );

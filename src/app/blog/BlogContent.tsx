@@ -156,8 +156,8 @@ function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
 
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex flex-wrap gap-2 mb-3">
-          <span className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full capitalize font-medium">{post.category}</span>
-          <span className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full flex items-center">
+          <span className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full capitalize font-medium transition-colors">{post.category}</span>
+          <span className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full flex items-center transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -169,14 +169,14 @@ function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
           <h2 className="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">{post.title}</h2>
         </Link>
 
-        <div className="text-sm text-gray-500 mb-4 flex items-center">
+        <div className="text-sm text-gray-500 mb-4 flex items-center transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           {post.date}
         </div>
 
-        <p className="mb-5 text-gray-600 line-clamp-3 text-sm leading-relaxed flex-grow">{post.excerpt}</p>
+        <p className="mb-5 text-gray-600 line-clamp-3 text-sm leading-relaxed flex-grow transition-colors">{post.excerpt}</p>
 
         <Link href={`/blog/${slug}`} className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium group mt-auto">
           <span className="group-hover:underline">더 읽기</span>

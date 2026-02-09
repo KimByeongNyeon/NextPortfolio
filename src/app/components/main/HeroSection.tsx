@@ -62,7 +62,7 @@ export default function HeroSection() {
   }, [isMounted]);
 
   return (
-    <div className="w-full h-full bg-black relative overflow-hidden flex items-center justify-center">
+    <div className="w-full h-full bg-white dark:bg-black relative overflow-hidden flex items-center justify-center transition-colors duration-500">
       {/* 배경 파티클 시스템 */}
       <div className="absolute inset-0 overflow-hidden">
         {isMounted && particles}
@@ -70,7 +70,7 @@ export default function HeroSection() {
 
       {/* 네온 그리드 배경 */}
       <div 
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-10 dark:opacity-20 transition-opacity"
         style={{
           backgroundImage: `
             linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
@@ -95,7 +95,7 @@ export default function HeroSection() {
         
         {/* 프로필 이미지 섹션 - 왼쪽 */}
         <motion.div 
-          className="flex justify-center lg:justify-start"
+          className="flex justify-center lg:justify-center"
           initial={{ opacity: 0, scale: 0.5, rotateY: -90 }}
           animate={{ opacity: 1, scale: 1, rotateY: 0 }}
           transition={{ 
@@ -106,39 +106,16 @@ export default function HeroSection() {
           }}
         >
           <div className="relative">
-            {/* 회전하는 네온 링들 */}
-            <motion.div 
-              className="absolute inset-0 rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="w-full h-full rounded-full border-2 border-blue-400/30 shadow-[0_0_20px_rgba(59,130,246,0.3)]" />
-            </motion.div>
             
-            <motion.div 
-              className="absolute -inset-4 rounded-full"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="w-full h-full rounded-full border border-purple-400/20 shadow-[0_0_30px_rgba(147,51,234,0.2)]" />
-            </motion.div>
-
-            <motion.div 
-              className="absolute -inset-8 rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="w-full h-full rounded-full border border-cyan-400/15" />
-            </motion.div>
             
             {/* 프로필 사진 */}
             <motion.div 
-              className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden"
+              className="relative w-72 h-72 md:w-72 md:h-72 lg:w-72 lg:h-72 rounded-full overflow-hidden"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
               {/* 내부 글로우 */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 rounded-full blur-xl" />
+              
               
               <Image
                 src="/assets/profile.png"
@@ -149,42 +126,10 @@ export default function HeroSection() {
               />
               
               {/* 오버레이 그라디언트 */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-full" />
+              
             </motion.div>
             
-            {/* 플로팅 기술 아이콘들 */}
-            <motion.div 
-              className="absolute -top-6 -right-6 w-16 h-16 bg-blue-500/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-blue-400/30"
-              animate={{ 
-                y: [0, -20, 0],
-                rotate: [0, 180, 360]
-              }}
-              transition={{ duration: 4, repeat: Infinity }}
-            >
-              <span className="text-2xl">⚡</span>
-            </motion.div>
-
-            <motion.div 
-              className="absolute -bottom-6 -left-6 w-16 h-16 bg-purple-500/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-purple-400/30"
-              animate={{ 
-                y: [0, 20, 0],
-                rotate: [360, 180, 0]
-              }}
-              transition={{ duration: 4, repeat: Infinity, delay: 2 }}
-            >
-              <span className="text-2xl">🚀</span>
-            </motion.div>
-
-            <motion.div 
-              className="absolute top-1/2 -left-12 w-12 h-12 bg-cyan-500/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-cyan-400/30"
-              animate={{ 
-                x: [0, -10, 0],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-            >
-              <span className="text-xl">💡</span>
-            </motion.div>
+            
           </div>
         </motion.div>
 
@@ -207,7 +152,7 @@ export default function HeroSection() {
             </motion.div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-              <div className="mb-4 text-white relative">
+              <div className="mb-4 text-gray-900 dark:text-white relative">
                 <TypeAnimation
                   sequence={[
                     '프론트엔드 개발자',
@@ -249,59 +194,11 @@ export default function HeroSection() {
             className="space-y-4"
           >
             {/* 글로우 카드 형태의 설명 */}
-            <motion.div 
-              className="relative p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 0 30px rgba(59, 130, 246, 0.2)"
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-2xl" />
-              <p className="text-xl text-gray-300 leading-relaxed relative z-10">
-                <span className="text-blue-400 font-mono">&gt;</span> 능동적인 태도로 개발하는 것을 추구합니다.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="relative p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 0 30px rgba(147, 51, 234, 0.2)"
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-cyan-500/5 rounded-2xl" />
-              <p className="text-xl text-gray-300 leading-relaxed relative z-10">
-                <span className="text-purple-400 font-mono">&gt;</span> 좋은 구조가 좋은 코드를 만든다.
-              </p>
-            </motion.div>
+            
           </motion.div>
 
           {/* 스킬 태그들 */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 3 }}
-            className="flex flex-wrap gap-3"
-          >
-            {['React', 'Next.js', 'TypeScript', 'Vue.js'].map((skill, index) => (
-              <motion.span
-                key={skill}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 3.2 + index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -2,
-                  boxShadow: "0 0 20px rgba(59, 130, 246, 0.4)"
-                }}
-                className="px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-white rounded-lg border border-blue-400/30 backdrop-blur-sm font-mono text-sm cursor-pointer hover:border-blue-400/50 transition-all duration-300"
-              >
-                {skill}
-              </motion.span>
-            ))}
-          </motion.div>
+          
 
           
         </motion.div>

@@ -5,6 +5,21 @@ export type TechIcon = {
   color: string;
 };
 
+export type TechChoice = {
+  title: string;
+  reason: string;
+  table?: {
+    headers: string[];
+    rows: string[][];
+  };
+};
+
+export type Troubleshooting = {
+  title: string;
+  content: string;
+  link?: string;
+};
+
 export type Project = {
   id: number;
   title: string;
@@ -42,4 +57,7 @@ export type Project = {
   role?: string; // 담당 역할
   duration?: string; // 개발 기간
   status: "completed" | "in-progress" | "planned"; // 프로젝트 상태
+  techChoices?: TechChoice[]; // 기술적 선택과 이유
+  retrospective?: string; // 회고 및 성장
+  troubleshooting?: Troubleshooting[]; // 트러블 슈팅
 }; 

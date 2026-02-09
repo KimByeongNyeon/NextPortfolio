@@ -71,7 +71,7 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-3xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl custom-scrollbar"
+            className="bg-white dark:bg-gray-900 rounded-3xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl custom-scrollbar transition-colors"
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -92,7 +92,7 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
                   {skill.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">{skill.name}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white transition-colors">{skill.name}</h2>
                   <span 
                     className="text-sm font-medium px-3 py-1 rounded-full text-white"
                     style={{ backgroundColor: skill.color }}
@@ -103,9 +103,9 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
               </div>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
               >
-                <HiX size={24} className="text-gray-500" />
+                <HiX size={24} className="text-gray-500 dark:text-gray-400" />
               </button>
             </div>
 
@@ -143,7 +143,7 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <motion.div 
-                      className="text-3xl font-bold text-gray-800"
+                      className="text-3xl font-bold text-gray-900 dark:text-white transition-colors"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5, duration: 0.5 }}
@@ -163,8 +163,8 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <h3 className="text-lg font-semibold text-gray-800 mb-3">기술 설명</h3>
-              <p className="text-gray-600 leading-relaxed">{skill.description}</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 transition-colors">기술 설명</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed transition-colors">{skill.description}</p>
             </motion.div>
 
             {/* 역량 목록 */}
@@ -173,12 +173,12 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">보유 역량</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 transition-colors">보유 역량</h3>
               <div className="space-y-3">
                 {skill.capabilities.map((capability, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-start space-x-3 p-3 bg-gray-50 rounded-xl"
+                    className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl transition-colors"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
@@ -187,7 +187,7 @@ function SkillModal({ skill, isOpen, onClose }: { skill: Skill | null; isOpen: b
                       className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
                       style={{ backgroundColor: skill.color }}
                     />
-                    <span className="text-gray-700 text-sm leading-relaxed">{capability}</span>
+                    <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed transition-colors">{capability}</span>
                   </motion.div>
                 ))}
               </div>
@@ -241,7 +241,6 @@ export default function SkillsContent() {
       capabilities: [
         "App Router와 Server Components 활용",
         "Dynamic Routing 구현",
-        
         "Image 최적화와 SEO 메타데이터 관리",
        
       ]
@@ -290,6 +289,19 @@ export default function SkillsContent() {
         "이벤트 루프와 콜백 큐 동작 원리 이해"
       ]
     },
+    {
+      name: "TaillwindCSS",
+      icon: <SiTailwindcss />,
+      level: 75,
+      category: "Frontend",
+      color: "#06B6D4",
+      description: "tailwindCSS의 유틸리티 클래스를 활용하여 직관적이고 효율적인 UI를 구현합니다.",
+      capabilities: [
+        "Responsive Design 구현",
+        "Custom Utility Class 작성",
+        "Theme System 구축"
+      ]
+    },
     { 
       name: "HTML5", 
       icon: <FaHtml5 />, 
@@ -311,7 +323,7 @@ export default function SkillsContent() {
       level: 85, 
       category: "Frontend", 
       color: "#1572B6",
-      description: "최신 CSS 기능과 레이아웃 시스템을 활용하여 반응형이고 아름다운 UI를 구현합니다.",
+      description: "최신 CSS 기능과 레이아웃 시스템을 활용하여 직관적인 UI를 구현합니다.",
       capabilities: [
         "Flexbox와 Grid를 활용한 레이아웃 설계",
         "CSS Variables를 통한 테마 시스템 구축",
@@ -358,10 +370,7 @@ export default function SkillsContent() {
       description: "버전 관리 시스템을 활용하여 효율적인 협업과 코드 이력 관리를 수행합니다.",
       capabilities: [
         "Git Flow와 GitHub Flow 전략 적용",
-        
-        "Merge, Rebase 활용",
         "Conflict 해결과 코드 리뷰 프로세스",
-        "Git Hooks를 통한 자동화"
       ]
     },
     { 
@@ -375,8 +384,6 @@ export default function SkillsContent() {
         "Component와 Variant를 활용한 디자인 시스템",
         "Auto Layout을 통한 반응형 디자인",
         "Interactive Prototype 제작",
-       
-       
       ]
     },
     
@@ -389,9 +396,7 @@ export default function SkillsContent() {
       description: "JAMstack과 서버리스 아키텍처를 활용하여 확장 가능한 웹 애플리케이션을 배포합니다.",
       capabilities: [
         "Git 기반 자동 배포와 Preview 환경",
-       
         "환경 변수와 Secret 관리",
-       
       ]
     },
   ];
@@ -410,7 +415,7 @@ export default function SkillsContent() {
   };
 
   return (
-    <div className="w-full bg-black text-white" ref={containerRef}>
+    <div className="w-full bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-500" ref={containerRef}>
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -484,7 +489,7 @@ export default function SkillsContent() {
               className="text-center"
             >
               
-              <p className="text-gray-300 text-lg">
+              <p className="text-gray-600 dark:text-gray-300 text-lg transition-colors">
                 빠르게 변화하는 프론트엔드 기술을 학습하고 적용합니다.
               </p>
             </motion.div>
@@ -512,7 +517,7 @@ export default function SkillsContent() {
             {infiniteSkills.map((skill, index) => (
               <motion.div
                 key={`${skill.name}-${index}`}
-                className="flex-shrink-0 w-56 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer"
+                className="flex-shrink-0 w-56 bg-gray-50 dark:bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer"
                 whileHover={{ 
                   scale: 1.05,
                   backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -539,16 +544,16 @@ export default function SkillsContent() {
                   </motion.div>
                   
                   <div className="space-y-3 w-full">
-                    <h3 className="font-semibold text-white text-lg">
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-lg transition-colors">
                       {skill.name}
                     </h3>
                     
-                    <div className="text-xs text-gray-300 px-2 py-1 bg-white/10 rounded-full backdrop-blur-sm">
+                    <div className="text-xs text-gray-600 dark:text-gray-300 px-2 py-1 bg-gray-100 dark:bg-white/10 rounded-full backdrop-blur-sm transition-colors">
                       {skill.category}
                     </div>
                     
                     {/* 숙련도 바 */}
-                    <div className="w-full bg-white/20 rounded-full h-3">
+                    <div className="w-full bg-gray-200 dark:bg-white/20 rounded-full h-3 transition-colors">
                       <motion.div
                         className="h-3 rounded-full relative overflow-hidden"
                         style={{ backgroundColor: skill.color }}
@@ -566,11 +571,11 @@ export default function SkillsContent() {
                       </motion.div>
                     </div>
                     
-                    <span className="text-sm font-bold text-gray-200">
+                    <span className="text-sm font-bold text-gray-700 dark:text-gray-200 transition-colors">
                       {skill.level}%
                     </span>
                     
-                    <p className="text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
                       클릭하여 상세 정보 보기
                     </p>
                   </div>

@@ -74,7 +74,7 @@ export default function WelcomeSection() {
   }, [isMounted]);
 
   return (
-    <section ref={sectionRef} className="w-full h-full bg-black relative overflow-hidden flex items-center justify-center">
+    <section ref={sectionRef} className="w-full h-full bg-white dark:bg-black relative overflow-hidden flex items-center justify-center transition-colors duration-500">
       {/* 배경 매트릭스 효과 */}
       <div className="absolute inset-0 opacity-10">
         <motion.div 
@@ -135,9 +135,9 @@ export default function WelcomeSection() {
             <div className="absolute inset-0 bg-green-400/10 rounded-2xl blur-xl" />
             
             {/* 터미널 윈도우 */}
-            <div className="relative bg-gray-900/90 backdrop-blur-sm border border-green-400/30 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="relative bg-gray-50/90 dark:bg-gray-900/90 backdrop-blur-sm border border-green-500/30 dark:border-green-400/30 rounded-2xl shadow-2xl overflow-hidden transition-colors">
               {/* 터미널 헤더 */}
-              <div className="flex items-center justify-between p-4 bg-gray-800/80 border-b border-green-400/20">
+              <div className="flex items-center justify-between p-4 bg-gray-100/80 dark:bg-gray-800/80 border-b border-green-500/20 dark:border-green-400/20 transition-colors">
                 <div className="flex items-center space-x-2">
                   <motion.div 
                     className="w-3 h-3 rounded-full bg-red-500"
@@ -176,7 +176,7 @@ export default function WelcomeSection() {
                 </div>
 
                 {/* 코드 타이핑 영역 */}
-                <div className="text-gray-200 leading-relaxed relative">
+                <div className="text-gray-800 dark:text-gray-200 leading-relaxed relative">
                   <TypeAnimation
                     sequence={[
                       'const welcome = () => {\n  console.log("안녕하세요., visitor!");\n}',
@@ -240,7 +240,7 @@ export default function WelcomeSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 3 }}
-            className="flex flex-col items-center text-gray-400 mt-40"
+            className="flex flex-col items-center text-gray-500 dark:text-gray-400 mt-40 transition-colors"
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}

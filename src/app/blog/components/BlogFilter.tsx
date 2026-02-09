@@ -73,7 +73,7 @@ export default function BlogFilter({ posts, onFilterChange }: BlogFilterProps) {
         ))}
       </div>
       
-      <div className="relative h-12 bg-gray-50 rounded-lg px-4 flex items-center">
+      <div className="relative h-12 bg-gray-50 rounded-lg px-4 flex items-center transition-colors">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -86,7 +86,7 @@ export default function BlogFilter({ posts, onFilterChange }: BlogFilterProps) {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-gray-700 font-medium">
+            <p className="text-gray-700 font-medium transition-colors">
               {activeCategory === 'all'
                 ? `전체 ${posts.length}개의 포스트`
                 : `${activeCategory === 'all' ? '전체' : activeCategory} 카테고리에 ${

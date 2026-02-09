@@ -8,7 +8,7 @@ export default function Background() {
       <div className="fixed inset-0 z-[-2] w-full h-screen">
         <Image src="/assets/background.png" alt="background" fill priority className="object-cover" quality={100} />
       </div>
-      <div className="fixed inset-0 z-[-1] bg-white/80" />
+      <div className="fixed inset-0 z-[-1] bg-white/80 dark:bg-black/60 transition-colors duration-500" />
     </>
   );
 }

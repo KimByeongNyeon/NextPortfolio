@@ -1,12 +1,29 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 
+  Tailwind v4 - Class-based dark mode 
+  This explicitly tells Tailwind to use the .dark class for dark: variants
+*/
+@variant dark (&:where(.dark, .dark *));
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+@theme {
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --background-image-main-background: url('/assets/background.png');
+}
 
 @layer base {
-  html {
-    font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  body {
+    @apply transition-colors duration-500 bg-white text-gray-900;
   }
+  
+  .dark body {
+    @apply bg-black text-white;
+  }
+}
+
+/* Fallback for components that don't transition smoothly */
+html {
+  scroll-behavior: smooth;
 }

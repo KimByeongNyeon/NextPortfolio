@@ -97,17 +97,7 @@ export default function ThankYouSection() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto text-sm text-gray-500 dark:text-gray-400 font-medium">
             <p>© 2026 Kim Byeong Nyeon. All rights reserved.</p>
             
-            <div className="flex items-center space-x-2">
-              <span>Made with</span>
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="text-rose-500"
-              >
-                ❤️
-              </motion.span>
-              
-            </div>
+            
           </div>
         </motion.div>
       </div>

@@ -10,7 +10,6 @@ import { FaVuejs, FaReact, FaJava, FaPython, FaTrophy } from "react-icons/fa";
 import { SiDjango, SiSpringboot, SiKotlin, SiTypescript, SiNextdotjs, SiFastapi } from "react-icons/si";
 import { Project, TechIcon, Troubleshooting } from "@/types/project";
 import { projects } from "@/lib/projectData";
-import { developerLottie } from "@/lib/lottie_developer";
 
 // 아이콘 매핑 함수
 const getTechIcon = (iconInfo: TechIcon) => {
@@ -30,8 +29,6 @@ const getTechIcon = (iconInfo: TechIcon) => {
   return iconMap[iconInfo.name] || <div style={{ color: iconInfo.color }}>{iconInfo.name}</div>;
 };
 
-// 개발중 Lottie 애니메이션 데이터 (코딩하는 애니메이션)
-const developmentAnimationData = developerLottie;
 
 // 이미지 컴포넌트 with 에러 처리
 const ProjectImage = ({ 

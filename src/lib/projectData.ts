@@ -133,7 +133,7 @@ AI 서버로부터 데이터를 받아오는 과정에서, 처리 시간이 길�
         title: "비동기 작업 상태 Polling 효율화",
         content:
           "초기에는 setInterval을 사용해 3초마다 polling을 진행하고 작업률이 100%가 되면 중단하는 방식이었으나, 타이밍 이슈로 작업 완료 후에도 불필요한 요청이 발생하는 문제가 있었습니다. 이를 TanStack Query의 refetchInterval과 enabled 옵션을 활용한 조건부 polling 구조로 개선하여 불필요한 네트워크 요청을 제거했습니다.",
-        link: "https://github.com/S207-tobe-continued/tobe-continued/pull/1", // 예시 링크
+        link: "https://www.notion.so/setInterval-vs-refetchInterval-1746a9632f1f80fd8e74e990b71914bf", // 예시 링크
       },
     ],
   },
@@ -261,11 +261,13 @@ AI 서버로부터 데이터를 받아오는 과정에서, 처리 시간이 길�
         title: "1:1 대기방 상태 동기화 프로세스 정립",
         content:
           "초기 설계에서는 WebSocket 연결 전 대기방 정보 정합성을 고려하지 않아 상태 동기화 이슈가 발생했습니다. 이를 'HTTP(Redis 저장) → WebSocket → STOMP' 순서로 통신 로직을 전면 수정하여 다중 사용자 간의 실시간 상태 일관성을 확보했습니다.",
+        link: "https://www.notion.so/STOMP-WebSocket-1f46a9632f1f8050867ae133ba5d5837", // 예시 링크
       },
       {
         title: "실시간 캐릭터 애니메이션 프레임 드롭 최적화",
         content:
           "캐릭터 변경 시 불필요한 이미지 데이터 재계산으로 인해 애니메이션이 끊기는 문제를 겪었습니다. useMemo를 활용한 애셋 메모이제이션과 컴포넌트 구조 분리를 통해 렌더링 부하를 줄여 부드러운 UX를 구현했습니다.",
+        
       },
     ],
   },

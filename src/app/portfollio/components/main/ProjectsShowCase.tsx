@@ -1,13 +1,36 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  AnimatePresence,
+} from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import Lottie from "lottie-react";
-import { FiExternalLink, FiGithub, FiArrowDown, FiX, FiEye, FiChevronLeft, FiChevronRight, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import {
+  FiExternalLink,
+  FiGithub,
+  FiArrowDown,
+  FiX,
+  FiEye,
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronDown,
+  FiChevronUp,
+} from "react-icons/fi";
 import { FaVuejs, FaReact, FaJava, FaPython, FaTrophy } from "react-icons/fa";
-import { SiDjango, SiSpringboot, SiKotlin, SiTypescript, SiNextdotjs, SiFastapi } from "react-icons/si";
+import {
+  SiDjango,
+  SiSpringboot,
+  SiKotlin,
+  SiTypescript,
+  SiNextdotjs,
+  SiFastapi,
+} from "react-icons/si";
 import { Project, TechIcon, Troubleshooting } from "@/types/project";
 import { projects } from "@/lib/projectData";
 
@@ -25,20 +48,23 @@ const getTechIcon = (iconInfo: TechIcon) => {
     FastAPI: <SiFastapi color={iconInfo.color} size={24} />,
     Python: <FaPython color={iconInfo.color} size={24} />,
   };
-  
-  return iconMap[iconInfo.name] || <div style={{ color: iconInfo.color }}>{iconInfo.name}</div>;
+
+  return (
+    iconMap[iconInfo.name] || (
+      <div style={{ color: iconInfo.color }}>{iconInfo.name}</div>
+    )
+  );
 };
 
-
 // 이미지 컴포넌트 with 에러 처리
-const ProjectImage = ({ 
-  src, 
-  alt, 
-  className 
-}: { 
-  src: string; 
-  alt: string; 
-  className?: string; 
+const ProjectImage = ({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
 }) => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,9 +80,11 @@ const ProjectImage = ({
 
   if (imageError) {
     return (
-      <div className={`${className} bg-gray-100 dark:bg-gray-800 flex flex-col items-center justify-center relative overflow-hidden transition-colors`}>
+      <div
+        className={`${className} bg-gray-100 dark:bg-gray-800 flex flex-col items-center justify-center relative overflow-hidden transition-colors`}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20" />
-        
+
         <div className="relative z-10 flex flex-col items-center justify-center text-center p-8">
           {/* 간단한 CSS 애니메이션으로 코딩 애니메이션 구현 */}
           <div className="mb-6">
@@ -66,51 +94,70 @@ const ProjectImage = ({
                 <div className="w-full h-full bg-gray-100 dark:bg-gray-900 rounded-lg p-2 relative overflow-hidden transition-colors">
                   <div className="space-y-1">
                     {/* 코드 라인들 */}
-                    <motion.div 
+                    <motion.div
                       className="h-1 bg-green-400 rounded"
                       animate={{ width: ["0%", "60%", "60%", "0%"] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                      }}
                     />
-                    <motion.div 
+                    <motion.div
                       className="h-1 bg-blue-400 rounded"
                       animate={{ width: ["0%", "80%", "80%", "0%"] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatType: "loop", delay: 0.3 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        delay: 0.3,
+                      }}
                     />
-                    <motion.div 
+                    <motion.div
                       className="h-1 bg-yellow-400 rounded"
                       animate={{ width: ["0%", "45%", "45%", "0%"] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatType: "loop", delay: 0.6 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        delay: 0.6,
+                      }}
                     />
-                    <motion.div 
+                    <motion.div
                       className="h-1 bg-purple-400 rounded"
                       animate={{ width: ["0%", "70%", "70%", "0%"] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatType: "loop", delay: 0.9 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        delay: 0.9,
+                      }}
                     />
                   </div>
-                  
+
                   {/* 커서 깜빡임 */}
-                  <motion.div 
+                  <motion.div
                     className="absolute bottom-2 left-2 w-0.5 h-3 bg-white"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   />
                 </div>
               </div>
-              
+
               {/* 키보드 */}
               <div className="mt-2 w-36 h-3 bg-gray-600 rounded-sm mx-auto">
                 <div className="grid grid-cols-12 gap-px p-0.5 h-full">
                   {Array.from({ length: 12 }).map((_, i) => (
-                    <motion.div 
+                    <motion.div
                       key={i}
                       className="bg-gray-700 rounded-sm"
-                      animate={{ 
-                        backgroundColor: ["#374151", "#4B5563", "#374151"] 
+                      animate={{
+                        backgroundColor: ["#374151", "#4B5563", "#374151"],
                       }}
-                      transition={{ 
-                        duration: 0.5, 
-                        repeat: Infinity, 
-                        delay: Math.random() * 2 
+                      transition={{
+                        duration: 0.5,
+                        repeat: Infinity,
+                        delay: Math.random() * 2,
                       }}
                     />
                   ))}
@@ -125,11 +172,13 @@ const ProjectImage = ({
             transition={{ delay: 0.5 }}
             className="text-center"
           >
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">개발 진행중</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">
+              개발 진행중
+            </h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 transition-colors">
               아직 진행중인 프로젝트입니다
             </p>
-            
+
             {/* 로딩 점들 */}
             <div className="flex justify-center space-x-1">
               {[0, 1, 2].map((i) => (
@@ -138,12 +187,12 @@ const ProjectImage = ({
                   className="w-2 h-2 bg-blue-400 rounded-full"
                   animate={{
                     y: [0, -8, 0],
-                    opacity: [0.3, 1, 0.3]
+                    opacity: [0.3, 1, 0.3],
                   }}
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    delay: i * 0.2
+                    delay: i * 0.2,
                   }}
                 />
               ))}
@@ -169,14 +218,14 @@ const ProjectImage = ({
                 transition={{
                   duration: 1,
                   repeat: Infinity,
-                  delay: i * 0.2
+                  delay: i * 0.2,
                 }}
               />
             ))}
           </div>
         </div>
       )}
-      
+
       <Image
         src={src}
         alt={alt}
@@ -200,8 +249,14 @@ const TroubleshootingItem = ({ item }: { item: Troubleshooting }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left"
       >
-        <span className="font-semibold text-gray-900 dark:text-white">{item.title}</span>
-        {isOpen ? <FiChevronUp className="text-gray-400" /> : <FiChevronDown className="text-gray-400" />}
+        <span className="font-semibold text-gray-900 dark:text-white">
+          {item.title}
+        </span>
+        {isOpen ? (
+          <FiChevronUp className="text-gray-400" />
+        ) : (
+          <FiChevronDown className="text-gray-400" />
+        )}
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -235,25 +290,25 @@ const TroubleshootingItem = ({ item }: { item: Troubleshooting }) => {
 };
 
 // 프로젝트 상세 모달 컴포넌트
-function ProjectDetailModal({ 
-  project, 
-  isOpen, 
-  onClose 
-}: { 
-  project: Project | null; 
-  isOpen: boolean; 
-  onClose: () => void; 
+function ProjectDetailModal({
+  project,
+  isOpen,
+  onClose,
+}: {
+  project: Project | null;
+  isOpen: boolean;
+  onClose: () => void;
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -262,23 +317,26 @@ function ProjectDetailModal({
   // 프로젝트별 갤러리 이미지 생성 (예: tobecontinued01.gif, tobecontinued02.gif 등)
   const generateGalleryImages = (projectTitle: string) => {
     const baseImages = [];
-    
+
     // 프로젝트 title과 실제 폴더명 매핑
     const folderMapping: Record<string, string> = {
-      'ToBeContinued': 'tobecontinued',
-      'CashFit': 'cashfit', 
-      'MBG(문방구)': 'mbg',
-      'FinCatch': 'fincatch',
-      'NextPortfolio': 'nextportfolio'
+      ToBeContinued: "tobecontinued",
+      CashFit: "cashfit",
+      "MBG(문방구)": "mbg",
+      FinCatch: "fincatch",
+      NextPortfolio: "nextportfolio",
     };
-    
-    const folderName = folderMapping[projectTitle] || projectTitle.toLowerCase();
-    
+
+    const folderName =
+      folderMapping[projectTitle] || projectTitle.toLowerCase();
+
     // 각 프로젝트별 실제 이미지 개수에 맞춰 조정
-    const imageCount = projectTitle === 'CashFit' ? 8 : 5;
-    
+    const imageCount = projectTitle === "CashFit" ? 8 : 5;
+
     for (let i = 1; i <= imageCount; i++) {
-      baseImages.push(`/assets/projects/${folderName}/${folderName}${i.toString().padStart(2, '0')}.gif`);
+      baseImages.push(
+        `/assets/projects/${folderName}/${folderName}${i.toString().padStart(2, "0")}.gif`,
+      );
     }
     return baseImages;
   };
@@ -290,7 +348,9 @@ function ProjectDetailModal({
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + galleryImages.length) % galleryImages.length,
+    );
   };
 
   return (
@@ -323,9 +383,13 @@ function ProjectDetailModal({
               <div className="pr-16">
                 <div className="flex items-center space-x-4 mb-4">
                   <span className="text-sm text-gray-500">{project.year}</span>
-                  <span className="text-sm text-gray-500 font-mono">{project.month}</span>
-                  <span className="text-sm text-gray-500">• {project.duration}</span>
-                  
+                  <span className="text-sm text-gray-500 font-mono">
+                    {project.month}
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    • {project.duration}
+                  </span>
+
                   {project.award && (
                     <span className="flex items-center space-x-1 px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-full text-xs font-semibold">
                       <FaTrophy size={12} />
@@ -340,7 +404,7 @@ function ProjectDetailModal({
                 <h2 className="text-xl text-gray-600 dark:text-gray-300 mb-4">
                   {project.subtitle}
                 </h2>
-                
+
                 {project.detailedDescription && (
                   <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
                     {project.detailedDescription}
@@ -352,24 +416,35 @@ function ProjectDetailModal({
                   {project.teamSize && (
                     <div>
                       <span className="text-gray-500">팀 규모:</span>
-                      <span className="text-gray-900 dark:text-white ml-2">{project.teamSize}명</span>
+                      <span className="text-gray-900 dark:text-white ml-2">
+                        {project.teamSize}명
+                      </span>
                     </div>
                   )}
                   {project.role && (
                     <div>
                       <span className="text-gray-500">담당 역할:</span>
-                      <span className="text-gray-900 dark:text-white ml-2">{project.role}</span>
+                      <span className="text-gray-900 dark:text-white ml-2">
+                        {project.role}
+                      </span>
                     </div>
                   )}
                   <div>
                     <span className="text-gray-500">상태:</span>
-                    <span className={`ml-2 px-2 py-1 rounded text-xs transition-colors ${
-                      project.status === 'completed' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' :
-                      project.status === 'in-progress' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' :
-                      'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'
-                    }`}>
-                      {project.status === 'completed' ? '완료' : 
-                       project.status === 'in-progress' ? '진행중' : '계획'}
+                    <span
+                      className={`ml-2 px-2 py-1 rounded text-xs transition-colors ${
+                        project.status === "completed"
+                          ? "bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300"
+                          : project.status === "in-progress"
+                            ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300"
+                            : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
+                      }`}
+                    >
+                      {project.status === "completed"
+                        ? "완료"
+                        : project.status === "in-progress"
+                          ? "진행중"
+                          : "계획"}
                     </span>
                   </div>
                 </div>
@@ -379,17 +454,23 @@ function ProjectDetailModal({
             <div className="p-8 space-y-12">
               {/* 갤러리 섹션 */}
               <section>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">프로젝트 갤러리</h3>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">
+                  프로젝트 갤러리
+                </h3>
                 <div className="relative">
-                  <div className={`${
-                    project.title === 'MBG(문방구)' ? 'aspect-[9/16]' : 'aspect-video'
-                  } rounded-2xl overflow-hidden bg-gray-800 relative max-h-[70vh]`}>
+                  <div
+                    className={`${
+                      project.title === "MBG(문방구)"
+                        ? "aspect-[9/16]"
+                        : "aspect-video"
+                    } rounded-2xl overflow-hidden bg-gray-800 relative max-h-[70vh]`}
+                  >
                     <ProjectImage
                       src={galleryImages[currentImageIndex]}
                       alt={`${project.title} 스크린샷 ${currentImageIndex + 1}`}
                       className="w-full h-full"
                     />
-                    
+
                     {/* 이미지 네비게이션 */}
                     {galleryImages.length > 1 && (
                       <>
@@ -415,7 +496,9 @@ function ProjectDetailModal({
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
                           className={`w-2 h-2 rounded-full transition-colors ${
-                            index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                            index === currentImageIndex
+                              ? "bg-white"
+                              : "bg-white/50"
                           }`}
                         />
                       ))}
@@ -426,45 +509,64 @@ function ProjectDetailModal({
 
               {/* 기술 스택 섹션 */}
               <section>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">기술 스택</h3>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  기술 스택
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {Object.entries(project.techStack).map(([category, techs]) => (
-                    <div key={category} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-white/5">
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 capitalize">
-                        {category}
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {techs.map((tech, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm border border-gray-200 dark:border-white/5"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                  {Object.entries(project.techStack).map(
+                    ([category, techs]) => (
+                      <div
+                        key={category}
+                        className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-white/5"
+                      >
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 capitalize">
+                          {category}
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {techs.map((tech, index) => (
+                            <span
+                              key={index}
+                              className="px-3 py-1 bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm border border-gray-200 dark:border-white/5"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ),
+                  )}
                 </div>
               </section>
 
               {/* 기술적 선택과 이유 섹션 */}
               {project.techChoices && (
                 <section>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">기술적 선택과 이유</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                    기술적 선택과 이유
+                  </h3>
                   <div className="space-y-6">
                     {project.techChoices.map((choice, index) => (
-                      <div key={index} className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-800">
-                        <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-4">{choice.title}</h4>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-wrap">{choice.reason}</p>
-                        
+                      <div
+                        key={index}
+                        className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-800"
+                      >
+                        <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-4">
+                          {choice.title}
+                        </h4>
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-wrap">
+                          {choice.reason}
+                        </p>
+
                         {choice.table && (
                           <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 transition-colors">
                             <table className="w-full text-sm text-left">
                               <thead className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors">
                                 <tr>
                                   {choice.table.headers.map((header, i) => (
-                                    <th key={i} className="px-4 py-3 font-semibold border-b border-gray-200 dark:border-gray-700">
+                                    <th
+                                      key={i}
+                                      className="px-4 py-3 font-semibold border-b border-gray-200 dark:border-gray-700"
+                                    >
                                       {header}
                                     </th>
                                   ))}
@@ -472,9 +574,15 @@ function ProjectDetailModal({
                               </thead>
                               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                                 {choice.table.rows.map((row, i) => (
-                                  <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                  <tr
+                                    key={i}
+                                    className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                                  >
                                     {row.map((cell, j) => (
-                                      <td key={j} className={`px-4 py-3 text-gray-600 dark:text-gray-400 ${j === 1 ? 'text-blue-600 dark:text-blue-300/80' : ''} transition-colors`}>
+                                      <td
+                                        key={j}
+                                        className={`px-4 py-3 text-gray-600 dark:text-gray-400 ${j === 1 ? "text-blue-600 dark:text-blue-300/80" : ""} transition-colors`}
+                                      >
                                         {cell}
                                       </td>
                                     ))}
@@ -493,37 +601,46 @@ function ProjectDetailModal({
               {/* 상세 기능 섹션 */}
               {project.detailedFeatures && (
                 <section>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">구현 기능</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {project.detailedFeatures.map((featureGroup, index) => (
-                    <motion.div
-                      key={index}
-                      className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-white/5"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                        {featureGroup.category}
-                      </h4>
-                      <ul className="space-y-2">
-                        {featureGroup.items.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                            <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  ))}
-                </div>
-              </section>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                    구현 기능
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {project.detailedFeatures.map((featureGroup, index) => (
+                      <motion.div
+                        key={index}
+                        className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-white/5"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      >
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                          {featureGroup.category}
+                        </h4>
+                        <ul className="space-y-2">
+                          {featureGroup.items.map((item, itemIndex) => (
+                            <li
+                              key={itemIndex}
+                              className="flex items-start space-x-3"
+                            >
+                              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
+                              <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                                {item}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    ))}
+                  </div>
+                </section>
               )}
 
               {/* 트러블 슈팅 섹션 */}
               {project.troubleshooting && (
                 <section>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">트러블 슈팅</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">
+                    트러블 슈팅
+                  </h3>
                   <div>
                     {project.troubleshooting.map((item, index) => (
                       <TroubleshootingItem key={index} item={item} />
@@ -537,17 +654,21 @@ function ProjectDetailModal({
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {project.challenges && project.challenges.length > 0 && (
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">도전과제</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">
+                        도전과제
+                      </h3>
                       <div className="space-y-3">
                         {project.challenges.map((challenge, index) => (
                           <motion.div
                             key={index}
-                            className="bg-red-900/20 border border-red-800/30 rounded-lg p-4"
+                            className="bg-gray-50 border border-gray-100 dark:bg-gray-800 dark:border-gray-800 rounded-lg p-4"
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                           >
-                            <p className="text-red-200 text-sm leading-relaxed">{challenge}</p>
+                            <p className="text-gray-900 dark:text-white text-sm leading-relaxed">
+                              {challenge}
+                            </p>
                           </motion.div>
                         ))}
                       </div>
@@ -556,17 +677,21 @@ function ProjectDetailModal({
 
                   {project.solutions && project.solutions.length > 0 && (
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">해결방법</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">
+                        해결방법
+                      </h3>
                       <div className="space-y-3">
                         {project.solutions.map((solution, index) => (
                           <motion.div
                             key={index}
-                            className="bg-green-900/20 border border-green-800/30 rounded-lg p-4"
+                            className="bg-gray-50 border border-gray-100 dark:bg-gray-800 dark:border-gray-800 rounded-lg p-4"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                           >
-                            <p className="text-green-200 text-sm leading-relaxed">{solution}</p>
+                            <p className="text-gray-900 dark:text-white text-sm leading-relaxed">
+                              {solution}
+                            </p>
                           </motion.div>
                         ))}
                       </div>
@@ -578,19 +703,43 @@ function ProjectDetailModal({
               {/* 회고 및 성장 섹션 */}
               {project.retrospective && (
                 <section>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">회고 및 성장</h3>
-                <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-100 dark:border-gray-800 rounded-2xl p-8">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                    회고 및 성장
+                  </h3>
+                  <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-100 dark:border-gray-800 rounded-2xl p-8">
                     <div className="prose prose-invert max-w-none">
-                      {project.retrospective.split('\n\n').map((paragraph, i) => (
-                        <p key={i} className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4 last:mb-0 whitespace-pre-wrap text-lg">
-                          {paragraph.split('`').map((part, j) => (
-                            j % 2 === 1 ? <code key={j} className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-blue-600 dark:text-blue-300 text-sm font-mono">{part}</code> : 
-                            part.split('**').map((subPart, k) => (
-                              k % 2 === 1 ? <strong key={k} className="text-gray-900 dark:text-white font-bold">{subPart}</strong> : subPart
-                            ))
-                          ))}
-                        </p>
-                      ))}
+                      {project.retrospective
+                        .split("\n\n")
+                        .map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4 last:mb-0 whitespace-pre-wrap text-lg"
+                          >
+                            {paragraph.split("`").map((part, j) =>
+                              j % 2 === 1 ? (
+                                <code
+                                  key={j}
+                                  className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-blue-600 dark:text-blue-300 text-sm font-mono"
+                                >
+                                  {part}
+                                </code>
+                              ) : (
+                                part.split("**").map((subPart, k) =>
+                                  k % 2 === 1 ? (
+                                    <strong
+                                      key={k}
+                                      className="text-gray-900 dark:text-white font-bold"
+                                    >
+                                      {subPart}
+                                    </strong>
+                                  ) : (
+                                    subPart
+                                  ),
+                                )
+                              ),
+                            )}
+                          </p>
+                        ))}
                     </div>
                   </div>
                 </section>
@@ -599,7 +748,9 @@ function ProjectDetailModal({
               {/* 배운 점 - 기존 데이터 호환용 */}
               {project.learnings && project.learnings.length > 0 && (
                 <section>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">배운 점</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">
+                    배운 점
+                  </h3>
                   <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 rounded-xl p-6 transition-colors">
                     <ul className="space-y-3">
                       {project.learnings.map((learning, index) => (
@@ -611,7 +762,9 @@ function ProjectDetailModal({
                           transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
                           <div className="w-1.5 h-1.5 bg-blue-400 dark:bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-blue-800 dark:text-blue-200 leading-relaxed font-medium transition-colors">{learning}</span>
+                          <span className="text-blue-800 dark:text-blue-200 leading-relaxed font-medium transition-colors">
+                            {learning}
+                          </span>
                         </motion.li>
                       ))}
                     </ul>
@@ -623,7 +776,10 @@ function ProjectDetailModal({
               <section className="flex justify-center pt-8">
                 <div className="flex space-x-4">
                   {project.githubLink && (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Link
                         href={project.githubLink}
                         className="flex items-center space-x-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors"
@@ -635,7 +791,10 @@ function ProjectDetailModal({
                     </motion.div>
                   )}
                   {project.link && (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Link
                         href={project.link}
                         className="flex items-center space-x-2 px-6 py-3 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors"
@@ -661,15 +820,15 @@ export default function ProjectsShowcase() {
   const [currentProject, setCurrentProject] = useState(0);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // 프로젝트 섹션이 뷰포트에 있는지 감지
-  const isProjectSectionInView = useInView(containerRef, { 
-    margin: "-20% 0px -20% 0px" 
+  const isProjectSectionInView = useInView(containerRef, {
+    margin: "-20% 0px -20% 0px",
   });
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   });
 
   // 스크롤에 따른 현재 프로젝트 업데이트
@@ -698,18 +857,18 @@ export default function ProjectsShowcase() {
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-track {
           background: #1f2937;
           border-radius: 10px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: linear-gradient(135deg, #4b5563, #6b7280);
           border-radius: 10px;
           border: 2px solid #1f2937;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: linear-gradient(135deg, #6b7280, #9ca3af);
         }
@@ -729,22 +888,24 @@ export default function ProjectsShowcase() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="text-6xl md:text-8xl font-bold mb-6">
-              PROJECTS
-            </h1>
-            
+            <h1 className="text-6xl md:text-8xl font-bold mb-6">PROJECTS</h1>
           </motion.div>
-          
+
           <motion.div
             className="flex flex-col items-center"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <span className="text-sm text-gray-400 dark:text-gray-500 mb-4 transition-colors">SCROLL TO EXPLORE</span>
-            <FiArrowDown className="text-gray-400 dark:text-gray-500 transition-colors" size={24} />
+            <span className="text-sm text-gray-400 dark:text-gray-500 mb-4 transition-colors">
+              SCROLL TO EXPLORE
+            </span>
+            <FiArrowDown
+              className="text-gray-400 dark:text-gray-500 transition-colors"
+              size={24}
+            />
           </motion.div>
         </div>
-        
+
         {/* 배경 그라디언트 */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 dark:via-black to-white dark:to-black opacity-80 transition-colors duration-500" />
       </section>
@@ -763,12 +924,12 @@ export default function ProjectsShowcase() {
       </div>
 
       {/* 네비게이션 인디케이터 - 프로젝트 섹션에 있을 때만 표시 */}
-      <motion.div 
+      <motion.div
         className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50"
         initial={{ opacity: 0, x: 50 }}
-        animate={{ 
+        animate={{
           opacity: isProjectSectionInView ? 1 : 0,
-          x: isProjectSectionInView ? 0 : 50
+          x: isProjectSectionInView ? 0 : 50,
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
@@ -777,7 +938,9 @@ export default function ProjectsShowcase() {
             <motion.div
               key={index}
               className={`w-2 h-8 rounded-full transition-all duration-300 ${
-                currentProject === index ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+                currentProject === index
+                  ? "bg-blue-500"
+                  : "bg-gray-300 dark:bg-gray-600"
               }`}
               whileHover={{ scale: 1.2 }}
               initial={{ scale: 0 }}
@@ -789,7 +952,7 @@ export default function ProjectsShowcase() {
       </motion.div>
 
       {/* 프로젝트 상세 모달 */}
-      <ProjectDetailModal 
+      <ProjectDetailModal
         project={selectedProject}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -799,50 +962,54 @@ export default function ProjectsShowcase() {
 }
 
 // 개별 프로젝트 섹션 컴포넌트
-function ProjectSection({ 
-  project, 
-  index, 
+function ProjectSection({
+  project,
+  index,
   isActive,
-  onDetailClick
-}: { 
-  project: Project; 
-  index: number; 
+  onDetailClick,
+}: {
+  project: Project;
+  index: number;
   isActive: boolean;
   onDetailClick: (project: Project) => void;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { margin: "-25%" });
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   const imageY = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="min-h-screen flex items-center relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* 프로젝트 정보 */}
         <motion.div
-          className={`space-y-8 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}
+          className={`space-y-8 ${index % 2 === 0 ? "lg:order-1" : "lg:order-2"}`}
           style={{ y: contentY }}
         >
           <motion.div
             initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+            animate={
+              isInView
+                ? { opacity: 1, x: 0 }
+                : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }
+            }
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="flex items-center space-x-4 mb-4">
-            <span className="text-sm text-gray-500">{project.year}</span>
+              <span className="text-sm text-gray-500">{project.year}</span>
               <span className="text-sm text-gray-500 font-mono">
                 {project.month}
               </span>
-              
+
               {project.award && (
                 <span className="flex items-center space-x-1 px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md text-xs font-semibold transition-colors">
                   <FaTrophy size={12} />
@@ -850,14 +1017,14 @@ function ProjectSection({
                 </span>
               )}
             </div>
-            
+
             <h2 className="text-4xl md:text-6xl font-bold mb-2 text-gray-900 dark:text-white transition-colors">
               {project.title}
             </h2>
             <h3 className="text-xl text-gray-600 dark:text-gray-400 mb-6 transition-colors">
               {project.subtitle}
             </h3>
-            
+
             <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8 transition-colors">
               {project.description}
             </p>
@@ -887,7 +1054,7 @@ function ProjectSection({
                 <FiEye size={20} />
                 <span>상세보기</span>
               </motion.button>
-              
+
               {project.githubLink && (
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -924,15 +1091,17 @@ function ProjectSection({
 
         {/* 프로젝트 이미지 */}
         <motion.div
-          className={`relative ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}
+          className={`relative ${index % 2 === 0 ? "lg:order-2" : "lg:order-1"}`}
           style={{ y: imageY }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            animate={
+              isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
+            }
             transition={{ duration: 1, delay: 0.3 }}
             className={`relative ${
-              project.title === 'MBG(문방구)' ? 'aspect-[9/16]' : 'aspect-video'
+              project.title === "MBG(문방구)" ? "aspect-[9/16]" : "aspect-video"
             } rounded-2xl overflow-hidden bg-gray-900`}
           >
             <ProjectImage
@@ -940,7 +1109,7 @@ function ProjectSection({
               alt={project.title}
               className="w-full h-full"
             />
-            
+
             {/* 이미지 오버레이 */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
           </motion.div>
@@ -952,13 +1121,17 @@ function ProjectSection({
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <h4 className="text-sm font-semibold text-gray-400 mb-3">내가 담당한 기능</h4>
+            <h4 className="text-sm font-semibold text-gray-400 mb-3">
+              내가 담당한 기능
+            </h4>
             {project.features.slice(0, 3).map((feature, idx) => (
               <motion.div
                 key={idx}
                 className="flex items-center text-sm text-gray-500"
                 initial={{ opacity: 0, x: 20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                animate={
+                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }
+                }
                 transition={{ duration: 0.5, delay: 0.6 + idx * 0.1 }}
               >
                 <div className="w-1 h-1 bg-gray-600 rounded-full mr-3" />

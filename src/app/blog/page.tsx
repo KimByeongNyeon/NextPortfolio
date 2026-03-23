@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import PageTransition from "../components/PageTransition";
-import ScrollReveal from "../components/common/ScrollReveal";
+import PageTransition from "../portfollio/components/PageTransition";
+import ScrollReveal from "../portfollio/components/common/ScrollReveal";
 import BlogContent from "./BlogContent";
 import { getAllPosts } from "@/lib/notion";
 import { NotionPost } from "@/types/notion";
@@ -19,7 +19,9 @@ export default async function BlogPage() {
 
     // 노션에서 포스트를 가져오지 못했다면 모의 데이터 사용
     if (posts.length === 0) {
-      console.log("노션 API 연결에 실패했거나 포스트가 없습니다. 모의 데이터를 사용합니다.");
+      console.log(
+        "노션 API 연결에 실패했거나 포스트가 없습니다. 모의 데이터를 사용합니다.",
+      );
       posts = mockPosts;
     }
   } catch (error) {
@@ -36,7 +38,13 @@ export default async function BlogPage() {
             <h1 className="text-3xl font-bold mb-6 text-gray-900">블로그</h1>
           </ScrollReveal>
 
-          <Suspense fallback={<div className="py-10 text-center text-gray-500">블로그 글을 불러오는 중...</div>}>
+          <Suspense
+            fallback={
+              <div className="py-10 text-center text-gray-500">
+                블로그 글을 불러오는 중...
+              </div>
+            }
+          >
             <BlogContent initialPosts={posts} />
           </Suspense>
         </div>

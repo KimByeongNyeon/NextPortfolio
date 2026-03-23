@@ -12,6 +12,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  const isBlogPage = pathname.startsWith("/blog");
+
   const routes = [
     { path: "/", label: "Home" },
     { path: "/blog", label: "Blog" },
@@ -72,7 +74,7 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center space-x-2">
-              <ThemeToggle />
+              {!isBlogPage && <ThemeToggle />}
               {/* 모바일 메뉴 버튼 */}
               <button 
                 className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
@@ -144,7 +146,7 @@ export default function Navbar() {
       {/* 데스크탑 플로팅 네비게이션 */}
       <div className="hidden md:block">
         <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center space-y-4">
-          <ThemeToggle />
+          {!isBlogPage && <ThemeToggle />}
           
           {/* 플로팅 메뉴 버튼 */}
           <motion.button

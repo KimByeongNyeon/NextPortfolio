@@ -4,8 +4,8 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import StaggeredAnimation from "../components/StaggeredAnimation";
-import ScrollReveal from "../components/common/ScrollReveal";
+import StaggeredAnimation from "../portfollio/components/StaggeredAnimation";
+import ScrollReveal from "../portfollio/components/common/ScrollReveal";
 import BlogFilter from "./components/BlogFilter";
 import { NotionPost } from "@/types/notion";
 
@@ -37,7 +37,8 @@ export default function BlogContent({ initialPosts }: BlogContentProps) {
     }))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(convertedPosts);
+  const [filteredPosts, setFilteredPosts] =
+    useState<BlogPost[]>(convertedPosts);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -46,12 +47,28 @@ export default function BlogContent({ initialPosts }: BlogContentProps) {
       </ScrollReveal>
 
       <AnimatePresence mode="wait">
-        <motion.div key={filteredPosts.length} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="pt-12">
+        <motion.div
+          key={filteredPosts.length}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="pt-12"
+        >
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 gap-y-12">
               {filteredPosts.map((post, index) => (
                 <ScrollReveal key={post.id} delay={index * 0.1}>
-                  <BlogPostCard post={post} coverImage={initialPosts.find((p) => p.id === post.id)?.coverImage} slug={initialPosts.find((p) => p.id === post.id)?.slug || post.id.toString()} />
+                  <BlogPostCard
+                    post={post}
+                    coverImage={
+                      initialPosts.find((p) => p.id === post.id)?.coverImage
+                    }
+                    slug={
+                      initialPosts.find((p) => p.id === post.id)?.slug ||
+                      post.id.toString()
+                    }
+                  />
                 </ScrollReveal>
               ))}
             </div>
@@ -63,7 +80,13 @@ export default function BlogContent({ initialPosts }: BlogContentProps) {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-blue-400 mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-16 w-16 text-blue-400 mx-auto mb-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -71,8 +94,12 @@ export default function BlogContent({ initialPosts }: BlogContentProps) {
                     d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                   />
                 </svg>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">포스트가 없습니다</h3>
-                <p className="text-gray-600 mb-4">해당 카테고리에 게시글이 아직 없습니다.</p>
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  포스트가 없습니다
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  해당 카테고리에 게시글이 아직 없습니다.
+                </p>
                 <button
                   onClick={() => setFilteredPosts(convertedPosts)}
                   className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-colors duration-300 shadow-md hover:shadow-lg font-medium"
@@ -111,7 +138,7 @@ function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
           {coverImage ? (
             <>
               {/* base64 이미지나 data URL은 항상 일반 img 태그 사용 */}
-              {coverImage.startsWith('data:') || imageError || useRegularImg ? (
+              {coverImage.startsWith("data:") || imageError || useRegularImg ? (
                 <img
                   src={coverImage}
                   alt={post.title}
@@ -136,7 +163,13 @@ function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
             </>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-16 w-16 text-blue-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -156,32 +189,74 @@ function BlogPostCard({ post, coverImage, slug }: BlogPostCardProps) {
 
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex flex-wrap gap-2 mb-3">
-          <span className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full capitalize font-medium transition-colors">{post.category}</span>
+          <span className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full capitalize font-medium transition-colors">
+            {post.category}
+          </span>
           <span className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full flex items-center transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-3 w-3 mr-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             {post.readTime}
           </span>
         </div>
 
         <Link href={`/blog/${slug}`}>
-          <h2 className="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">{post.title}</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">
+            {post.title}
+          </h2>
         </Link>
 
         <div className="text-sm text-gray-500 mb-4 flex items-center transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 mr-1 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
           </svg>
           {post.date}
         </div>
 
-        <p className="mb-5 text-gray-600 line-clamp-3 text-sm leading-relaxed flex-grow transition-colors">{post.excerpt}</p>
+        <p className="mb-5 text-gray-600 line-clamp-3 text-sm leading-relaxed flex-grow transition-colors">
+          {post.excerpt}
+        </p>
 
-        <Link href={`/blog/${slug}`} className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium group mt-auto">
+        <Link
+          href={`/blog/${slug}`}
+          className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium group mt-auto"
+        >
           <span className="group-hover:underline">더 읽기</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
           </svg>
         </Link>
       </div>

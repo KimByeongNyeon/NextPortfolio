@@ -1,22 +1,21 @@
 "use client";
 
-import PageTransition from "./components/PageTransition";
-import WelcomeSection from "./components/main/WelcomeSection";
-import HeroSection from "./components/main/HeroSection";
-import IntroduceSection from "./components/main/IntroduceSeciton";
-import ProjectsSection from "./components/main/ProjectsSection";
-import ThankYouSection from "./components/main/ThankYouSection";
-import SkillsContent from "./components/skills/SkillsContent";
+import PageTransition from "./portfollio/components/PageTransition";
+import WelcomeSection from "./portfollio/components/main/WelcomeSection";
+import HeroSection from "./portfollio/components/main/HeroSection";
+import IntroduceSection from "./portfollio/components/main/IntroduceSeciton";
+import ProjectsSection from "./portfollio/components/main/ProjectsSection";
+import ThankYouSection from "./portfollio/components/main/ThankYouSection";
+import SkillsContent from "./portfollio/components/skills/SkillsContent";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-
 export default function Home() {
   const containerRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
 
   // Welcome 컨텐츠 애니메이션 - 더 길고 부드러운 전환
@@ -35,33 +34,32 @@ export default function Home() {
         {/* Sticky 전환 섹션 */}
         <section className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 w-full h-full">
-            
             {/* Welcome 컨텐츠 */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0"
               style={{
                 opacity: welcomeOpacity,
                 y: welcomeY,
-                scale: welcomeScale
+                scale: welcomeScale,
               }}
             >
               <WelcomeSection />
             </motion.div>
 
             {/* Hero 컨텐츠 */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0"
               style={{
                 opacity: heroOpacity,
                 y: heroY,
-                scale: heroScale
+                scale: heroScale,
               }}
             >
               <HeroSection />
             </motion.div>
           </div>
         </section>
-        
+
         {/* 스크롤 공간 확보 - 더 부드러운 전환을 위한 충분한 공간 */}
         <div className="h-[200vh]"></div>
       </div>
@@ -123,12 +121,12 @@ export default function Home() {
           scroll-behavior: smooth;
           scroll-snap-type: y proximity;
         }
-        
+
         /* 매끄러운 스크롤링을 위한 추가 스타일 */
         body {
           overscroll-behavior: none;
         }
-        
+
         /* 모바일에서의 부드러운 스크롤 */
         @media (max-width: 768px) {
           html {

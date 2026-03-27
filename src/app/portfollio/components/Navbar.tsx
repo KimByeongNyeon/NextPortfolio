@@ -12,11 +12,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  const isBlogPage = pathname.startsWith("/blog");
-
   const routes = [
     { path: "/", label: "Home" },
-    { path: "/blog", label: "Blog" },
+    { path: "https://velog.io/@qud5252/posts", label: "Blog", external: true },
   ];
 
   useEffect(() => {
@@ -74,7 +72,7 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center space-x-2">
-              {!isBlogPage && <ThemeToggle />}
+              <ThemeToggle />
               {/* 모바일 메뉴 버튼 */}
               <button 
                 className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
@@ -123,20 +121,33 @@ export default function Navbar() {
           >
             <div className="pt-4 pb-2 border-t border-gray-100 dark:border-white/10 mt-4">
               <div className="flex flex-col space-y-2">
-                {routes.map((route) => (
-                  <Link
-                    key={route.path}
-                    href={route.path}
-                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                      pathname === route.path 
-                        ? "bg-gray-100 dark:bg-white/10 text-black dark:text-white" 
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white"
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {route.label}
-                  </Link>
-                ))}
+                {routes.map((route) =>
+                  route.external ? (
+                    <a
+                      key={route.path}
+                      href={route.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-3 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {route.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={route.path}
+                      href={route.path}
+                      className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        pathname === route.path
+                          ? "bg-gray-100 dark:bg-white/10 text-black dark:text-white"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white"
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {route.label}
+                    </Link>
+                  )
+                )}
               </div>
             </div>
           </motion.div>
@@ -146,7 +157,7 @@ export default function Navbar() {
       {/* 데스크탑 플로팅 네비게이션 */}
       <div className="hidden md:block">
         <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center space-y-4">
-          {!isBlogPage && <ThemeToggle />}
+          <ThemeToggle />
           
           {/* 플로팅 메뉴 버튼 */}
           <motion.button
@@ -182,27 +193,40 @@ export default function Navbar() {
             >
               <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-white/10 py-4 px-2 min-w-[120px]">
                 <div className="flex flex-col space-y-1">
-                  {routes.map((route) => (
-                    <Link
-                      key={route.path}
-                      href={route.path}
-                      className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors text-center relative ${
-                        pathname === route.path 
-                          ? "bg-gray-100 dark:bg-white/10 text-black dark:text-white" 
-                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white"
-                      }`}
-                      onClick={() => setIsFloatingMenuOpen(false)}
-                    >
-                      {route.label}
-                      {pathname === route.path && (
-                        <motion.div 
-                          className="absolute left-2 top-1/2 -translate-y-1/2 w-1 h-6 bg-black dark:bg-white rounded-full"
-                          layoutId="floating-indicator"
-                          transition={{ type: "spring", duration: 0.5 }}
-                        />
-                      )}
-                    </Link>
-                  ))}
+                  {routes.map((route) =>
+                    route.external ? (
+                      <a
+                        key={route.path}
+                        href={route.path}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-3 rounded-lg text-sm font-medium transition-colors text-center text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white"
+                        onClick={() => setIsFloatingMenuOpen(false)}
+                      >
+                        {route.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={route.path}
+                        href={route.path}
+                        className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors text-center relative ${
+                          pathname === route.path
+                            ? "bg-gray-100 dark:bg-white/10 text-black dark:text-white"
+                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white"
+                        }`}
+                        onClick={() => setIsFloatingMenuOpen(false)}
+                      >
+                        {route.label}
+                        {pathname === route.path && (
+                          <motion.div
+                            className="absolute left-2 top-1/2 -translate-y-1/2 w-1 h-6 bg-black dark:bg-white rounded-full"
+                            layoutId="floating-indicator"
+                            transition={{ type: "spring", duration: 0.5 }}
+                          />
+                        )}
+                      </Link>
+                    )
+                  )}
                 </div>
               </div>
             </motion.div>

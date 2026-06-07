@@ -93,7 +93,7 @@ export default function IntroduceSection() {
         {/* Header */}
         <motion.div {...fadeIn} className="mb-20">
           <h3 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
-            소통을 기반으로 함께 성장하는 개발자 입니다.
+            생각에 머무르지 않고, 결국 움직여 변화를 만드는 개발자 입니다.
             <br />
           </h3>
         </motion.div>

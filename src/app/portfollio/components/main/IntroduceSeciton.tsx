@@ -41,6 +41,8 @@ export default function IntroduceSection() {
     "SSAFY 전국 프로젝트 발표회 입상",
   ];
 
+  const certifications = ["한국사 능력 검정 시험 1급"];
+
   const timeline = [
     {
       year: "2023",
@@ -200,21 +202,37 @@ export default function IntroduceSection() {
           </motion.div>
 
           {/* Awards */}
-          <motion.div {...fadeIn}>
-            <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-              Awards
-            </h4>
-            <ul className="space-y-6">
-              {awards.map((award) => (
-                <li key={award} className="flex items-start gap-3">
+          <div className="space-y-20">
+            <motion.div {...fadeIn}>
+              <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+                Awards
+              </h4>
+              <ul className="space-y-6">
+                {awards.map((award) => (
+                  <li key={award} className="flex items-start gap-3">
+                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                    <span className="text-gray-700 dark:text-gray-300 text-lg leading-snug">
+                      {award}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div>
+              <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+                Certifications
+              </h4>
+              {certifications.map((certification) => (
+                <li key={certification} className="flex items-start gap-3">
                   <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                   <span className="text-gray-700 dark:text-gray-300 text-lg leading-snug">
-                    {award}
+                    {certification}
                   </span>
                 </li>
               ))}
-            </ul>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

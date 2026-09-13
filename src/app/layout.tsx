@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./portfollio/components/Navbar";
 import TransitionProvider from "./portfollio/components/TransitionProvider";
-import Background from "./portfollio/components/Background";
 import { ThemeProvider } from "./portfollio/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
@@ -94,9 +93,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Background />
           <Navbar />
-          <main>
+          <main id="main-content" tabIndex={-1}>
             <TransitionProvider>{children}</TransitionProvider>
           </main>
         </ThemeProvider>

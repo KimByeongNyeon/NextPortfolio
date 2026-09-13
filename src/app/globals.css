@@ -27,3 +27,56 @@
 html {
   scroll-behavior: smooth;
 }
+
+:root {
+  --surface: #fafaf9;
+  --raised: #ffffff;
+  --canvas: #f5f5f6;
+  --subtle: #f0f0f2;
+  --ink: #242529;
+  --muted: #5f626b;
+  --faint: #777c86;
+  --line: #e7e7eb;
+  --line-strong: #d8d9df;
+  --accent: #345d84;
+  --accent-soft: #edf2f6;
+  --accent-border: #b7cadb;
+  --accent-halo: #345d8408;
+  --dot: #d9d9e1;
+  --nav-surface: #fafaf9e8;
+  --project-one: #eef0f2;
+  --project-two: #ebeff5;
+  --project-three: #ecf1ee;
+  --project-four: #f3eeeb;
+}
+.dark {
+  --surface: #141517;
+  --raised: #1b1c1f;
+  --canvas: #17181b;
+  --subtle: #232429;
+  --ink: #edeef0;
+  --muted: #b1b5be;
+  --faint: #9298a4;
+  --line: #2a2b31;
+  --line-strong: #393b45;
+  --accent: #a3c0da;
+  --accent-soft: #24313d;
+  --accent-border: #4c657c;
+  --accent-halo: #a3c0da07;
+  --dot: #33343d;
+  --nav-surface: #141517e8;
+  --project-one: #282c30;
+  --project-two: #232b36;
+  --project-three: #242f2b;
+  --project-four: #302924;
+}
+body, .dark body { background: var(--surface); color: var(--ink); }
+::selection { background: var(--accent-border); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+html[data-portfolio-deck="true"] {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 84px;
+}
